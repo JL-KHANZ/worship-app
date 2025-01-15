@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+
+const auth = false;
+
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+    <div class="toolbar-title">Worship App</div>
+    <div style="margin-left:auto; display: flex; flex-direction: row;">
+      <div v-if="!auth" class="toolbar-button">
+        <RouterLink to="/">Sign in</RouterLink>
+      </div>
+      <div class="toolbar-button">
+        <RouterLink to="/signup">Sign up</RouterLink>
+      </div>
     </div>
   </header>
 
@@ -24,6 +25,16 @@ import HelloWorld from './components/HelloWorld.vue'
 header {
   line-height: 1.5;
   max-height: 100vh;
+  display:flex;
+}
+
+.toolbar-title {
+  font-weight: bold;
+  font-size: x-large;
+}
+.toolbar-button {
+  display: flex;
+  flex-direction: column;
 }
 
 .logo {
