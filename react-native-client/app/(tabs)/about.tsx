@@ -1,5 +1,6 @@
 import { Text, View, StyleSheet, Image, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Link } from 'expo-router';
 
 export default function AboutScreen() {
 
@@ -12,6 +13,9 @@ export default function AboutScreen() {
         <SafeAreaView style={styles.container}>
             <View style={styles.view}>
                 <Button onPress={() => alert('button tapped')} title='Test' color={'orange'}/>
+                <Link href='/signin' style={{color:'#fff'}}>
+                    <Text style={{color:'#000'}}>GO</Text>
+                </Link>
             </View>
         </SafeAreaView>
     );
