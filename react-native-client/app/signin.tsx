@@ -19,22 +19,25 @@ export default function AboutScreen() {
 
                 {/* User Input */}
                 <View style={[{marginBlockEnd: 20},styles.horizontal]}>
-                    <Text style={[{fontSize: 20, marginRight: 20, fontWeight: '300'}, styles.text]}>Username:</Text>
+                    <Text style={[{fontSize: 20, marginRight: 20, fontWeight: '400'}, styles.text]}>Username:</Text>
                     <TextInput style={styles.input} />
                 </View>
-                <Text style={[{fontSize: 20, marginBlockEnd: 40, fontWeight: '300'}, styles.text]}>Password:</Text>
+                <View style={[{marginBlockEnd: 40},styles.horizontal]}>
+                    <Text style={[{fontSize: 20, marginRight: 20, fontWeight: '400'}, styles.text]}>Password:</Text>
+                    <TextInput style={styles.input} />
+                </View>
 
                 {/* Sign In Button */}
                 <TouchableOpacity onPress={signInFunc} style={styles.button}>
                     <Text style={[{fontSize: 20, fontWeight: '700'}, styles.text]}>Sign In</Text>
                 </TouchableOpacity>
             </View>
-                
+
             {/* Go To Button */}
             <TouchableOpacity onPress={goToSignUp} style={{marginBlockStart: 15}}>
                 <Text style={{
                     color: secondaryColor, 
-                    marginLeft: 60, 
+                    marginLeft: 60,
                     textDecorationLine: 'underline', 
                     fontWeight: '200', 
                     fontFamily: fontfamily
@@ -65,10 +68,14 @@ const styles = StyleSheet.create({
         fontFamily: fontfamily,
     },
     input: {
-        borderWidth: 1,
+        flex: 1,
+        marginRight: 200,
+        borderBottomWidth: 1,
+        borderColor: primaryColor,
+        borderStyle: 'dashed'
     },
     view: {
-        marginBlockStart: 300,
+        marginBlockStart: 350,
         backgroundColor: tertiaryColor,
         paddingBlockStart: 50
     },
