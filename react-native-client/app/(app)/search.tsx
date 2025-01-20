@@ -3,7 +3,7 @@ import { fontfamily, primaryColor, secondaryColor, tertiaryColor, bgColor, mainS
 
 export default function HomeScreen() {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor: bgColor, flex: 1}}>
         <Image style={mainScreenStyles.titleIconImage} source={require('../../assets/icons/searchPageIcon.png')} />
         <Text style={mainScreenStyles.titleText}>Search</Text>
     </SafeAreaView>

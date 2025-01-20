@@ -14,10 +14,25 @@ export const mainScreenStyles = StyleSheet.create({
         marginBlockStart: 100,
         marginLeft: 70
     },
+    smallTitleText: {
+        color: primaryColor,
+        fontFamily: fontfamily,
+        fontSize: 35,
+    },
+    text: {
+        color: primaryColor,
+        fontFamily: fontfamily,
+        fontSize: 23,
+    },
+    subtitleText: {
+        color: primaryColor,
+        fontFamily: fontfamily,
+        fontSize: 18,
+    },
     titleIconImage: {
         position: 'absolute',
         top: -150,
-        left: -150,
+        left: -170,
     }
 })
 
