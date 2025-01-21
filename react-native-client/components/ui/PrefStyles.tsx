@@ -15,7 +15,7 @@ export const mainScreenStyles = StyleSheet.create({
         marginLeft: 70
     },
     smallTitleText: {
-        color: primaryColor,
+        color: secondaryColor,
         fontFamily: fontfamily,
         fontSize: 35,
     },

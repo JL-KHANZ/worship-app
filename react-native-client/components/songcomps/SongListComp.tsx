@@ -1,4 +1,4 @@
-import { Image, ScrollView, Text, StyleSheet } from "react-native";
+import { Image, ScrollView, Text, StyleSheet, View } from "react-native";
 import SongComp from "./SongComp";
 
 interface Props {
@@ -7,21 +7,31 @@ interface Props {
 
 export default function SongListComp({ songSources }: Props) {
     return (
-        <ScrollView style={songListStyle.song}>
+        <ScrollView>
             <SongList songSources={songSources} />
         </ScrollView>
     )
 }
 
 function SongList({ songSources }: Props) {
-    return songSources.map(song => {
-        return <SongComp songSource={song} />
-    })
+    return(
+        <View style={localStyles.songListView}>
+            {songSources.map(song => {
+                return (
+                    <View style={localStyles.songView}>
+                        <SongComp songSource={song.route} key={song.id} name={song.name} />
+                    </View>
+                )
+            })}
+        </View>
+    )
 }
-// must be shown as row ... why does it not work
-const songListStyle = StyleSheet.create({
-    song: {
-        flex: 1,
+
+const localStyles = StyleSheet.create({
+    songListView: {
         flexDirection: 'row'
+    },
+    songView: {
+        marginRight: 30,
     }
 })
