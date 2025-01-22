@@ -1,15 +1,43 @@
-import { Image, StyleSheet, Platform, ScrollView, Text, SafeAreaView, View, TextInput } from 'react-native';
+import { Image, StyleSheet, Platform, ScrollView, Text, SafeAreaView, View, TextInput, TouchableOpacity } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { fontfamily, primaryColor, secondaryColor, tertiaryColor, bgColor, mainScreenStyles } from '@/components/ui/PrefStyles';
-import React, { useMemo } from 'react';
-import { RecentSongList } from '@/assets/exampleSongs/exampleDB';
+import React, { useEffect, useMemo } from 'react';
+import { RecentSongList, RecentSearchHistory } from '@/assets/exampleSongs/exampleDB';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import SongsListViewComp from '@/components/songcomps/SongsListViewComp';
+
 
 export default function HomeScreen() {
-  const [selected, setSelected] = React.useState("")
-  var data = []
-  for (var i = 0; i<4; i++) {
-    data.push(RecentSongList[i].name)
+  const [showSuggestions, setShowSuggestions] = React.useState({})
+
+  var data = RecentSearchHistory
+
+  function searchTextHandler(word: any) {
+    console.log("change text to ")
+  }
+  function showSuggestionsHandler() {
+    setShowSuggestions(!showSuggestions)
+  }
+
+  function Suggestions() {
+    if (!showSuggestions) {
+      return (
+        <ScrollView style={localStyles.suggestionBox}>
+          <SuggestionItems />
+        </ScrollView>
+      )
+    }
+  }
+  function SuggestionItems() {
+    return data.map(item => {
+      return (  
+        // how to pass item value to searchTextHandler??? 
+        // (when recent item is pressed, the search text must be changed to it, and a query sent to DB)
+        <TouchableOpacity onPress={searchTextHandler}>
+          <Text style={localStyles.suggestionText}>{item}</Text>
+        </TouchableOpacity>
+      )
+    })
   }
 
   return (
@@ -18,11 +46,23 @@ export default function HomeScreen() {
         <Text style={mainScreenStyles.titleText}>Search</Text>
         <View style={localStyles.searchBar}>
           <IconSymbol style={{paddingInline: 30}} size={28} name="text.magnifyingglass.rtl" color={primaryColor} />
-          <TextInput style={localStyles.searchTextInput} placeholder='Search by Title'/>
+          <TextInput onEndEditing={showSuggestionsHandler} onFocus={showSuggestionsHandler} style={localStyles.searchTextInput} placeholder='Search by Title'/>
         </View>
+        <Suggestions />
+        <ScrollView>
+          {/* recent songs */}
+          <View style={{marginBlockStart: 50}}>
+            <SongsListViewComp viewTitle={"Recent Songs"} songList={RecentSongList} />
+          </View>
+          {/* recent songs */}
+          <View style={{marginBlockStart: 50}}>
+            <SongsListViewComp viewTitle={"Recent Songs"} songList={RecentSongList} />
+          </View>
+        </ScrollView>
     </SafeAreaView>
   );
 }
+
 
 const localStyles = StyleSheet.create({
   searchBar: {
@@ -38,6 +78,22 @@ const localStyles = StyleSheet.create({
   searchTextInput: {
     color: primaryColor,
     paddingInline: 10,
-    fontSize: 20
+    fontSize: 20,
+    flex: 1
+  },
+  suggestionBox: {
+    marginInline: 50,
+    borderColor: primaryColor,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderCurve: 'circular',
+    padding: 10,
+    marginBlockStart: 20,
+    maxHeight: 180
+  },
+  suggestionText: {
+    color: primaryColor,
+    fontSize: 18,
+    marginBlock: 5
   }
 })

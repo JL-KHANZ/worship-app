@@ -10,14 +10,14 @@ export const mainScreenStyles = StyleSheet.create({
     titleText: {
         color: primaryColor,
         fontFamily: fontfamily,
-        fontSize: 80,
+        fontSize: 70,
         marginBlockStart: 100,
         marginLeft: 70
     },
     smallTitleText: {
         color: secondaryColor,
         fontFamily: fontfamily,
-        fontSize: 35,
+        fontSize: 30,
     },
     text: {
         color: primaryColor,

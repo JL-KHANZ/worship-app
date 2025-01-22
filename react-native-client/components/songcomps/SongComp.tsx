@@ -1,4 +1,4 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import { primaryColor, mainScreenStyles } from "../ui/PrefStyles";
 
 interface Props {
@@ -8,11 +8,10 @@ interface Props {
 
 export default function SongComp({ songSource, name }: Props) {
     return (
-        <View>
+        <TouchableOpacity>
             <Image source={songSource} style={localStyles.image} />
             <Text numberOfLines={1} style={[mainScreenStyles.subtitleText, localStyles.text]}>{name}</Text>
-        </View>
-        
+        </TouchableOpacity>
     )
 }
 
