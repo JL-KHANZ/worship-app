@@ -61,12 +61,18 @@ export const set1 = {
     lastViewed: "21/01/2025",
     views: 7
 }
-export const setsTable = [
-    { setId: 1, songId: 1 },
+export const setCount = 1;
+export const userSets = [
+    [{ setId: 1, songId: 1 },
     { setId: 1, songId: 2 },
     { setId: 1, songId: 3 },
-    { setId: 1, songId: 4 }
+    { setId: 1, songId: 4 }],
+    [{ setId: 2, songId: 2 },
+    { setId: 2, songId: 1 },
+    { setId: 2, songId: 4 },
+    { setId: 2, songId: 3 }],
 ]
+export const allSongs = {examplesong1, examplesong2, examplesong3, examplesong4}
 
 export const RecentSongList = [
     examplesong1, examplesong2, examplesong3, examplesong4
