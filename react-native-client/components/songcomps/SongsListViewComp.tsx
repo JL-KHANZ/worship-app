@@ -3,9 +3,9 @@ import { mainScreenStyles } from "../ui/PrefStyles";
 import SongListComp from "./SongListComp";
 
 interface Props {
-    songList: Array<any>,
+    songList: Array<SONGOBJ>,
     viewTitle: String
-} 
+}
 export default function SongsListViewComp({ songList, viewTitle }: Props ) {
 
     return (

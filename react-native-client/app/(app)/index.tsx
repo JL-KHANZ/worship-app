@@ -8,9 +8,13 @@ import {
    bgColor, 
    mainScreenStyles } from '@/components/ui/PrefStyles';
 
-import { RecommendedSongList, RecentSongList, TrendingSongList } from '../../assets/exampleSongs/exampleDB'
-
+import { getRecommendedSongList, getRecentSongList, getTrendingSongList } from '@/assets/api';
 import SongsListViewComp from '@/components/songcomps/SongsListViewComp'
+import { useEffect } from 'react';
+
+var recentSongList : Array<SONGOBJ>
+var recommendedSongList : Array<SONGOBJ>
+var trendingSongList : Array<SONGOBJ>
 
 export default function HomeScreen() {
 
@@ -21,18 +25,24 @@ export default function HomeScreen() {
       <ScrollView>
         {/* recent songs */}
         <View style={{marginBlockStart: 50}}>
-          <SongsListViewComp viewTitle={"Recent Songs"} songList={RecentSongList} />
+          <SongsListViewComp viewTitle={"Recent Songs"} songList={recentSongList} />
         </View>
         {/* recommended songs */}
         <View style={{marginBlockStart: 50}}>
-          <SongsListViewComp viewTitle={"Recommended Songs"} songList={RecommendedSongList} />
+          <SongsListViewComp viewTitle={"Recommended Songs"} songList={recommendedSongList} />
         </View>
         {/* trending songs */}
         <View style={{marginBlockStart: 50}}>
-          <SongsListViewComp viewTitle={"Trending Songs"} songList={TrendingSongList} />
+          <SongsListViewComp viewTitle={"Trending Songs"} songList={trendingSongList} />
         </View>
         <View style={{marginBlockEnd: 150}}></View>
       </ScrollView>
     </SafeAreaView>
   );
 }
+
+useEffect(() => {
+  recentSongList = getRecentSongList();
+  recommendedSongList = getRecommendedSongList();
+  trendingSongList = getTrendingSongList();
+}, [])

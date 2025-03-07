@@ -3,7 +3,7 @@ import { primaryColor, mainScreenStyles } from "../ui/PrefStyles";
 
 interface Props {
     songSource: any,
-    name: any,
+    name: string,
 }
 
 export default function SongComp({ songSource, name }: Props) {

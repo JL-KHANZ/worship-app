@@ -1,15 +1,19 @@
 import { Text } from "react-native"
 import { mainScreenStyles } from "../ui/PrefStyles"
+import { useEffect } from "react";
+import { getAllSetSongs } from "@/assets/api";
 
 interface Props {
-    set: any,
-    allSongs: any
+    set: SETOBJ,
 }
 
-export default function SetComp({set, allSongs} : Props) {
-    console.log("test", set[0].setId)
+var setSongs : Array<SONGOBJ>;
+export default function SetComp({set} : Props) {
+
+    setSongs = getAllSetSongs(set.setId);
+    console.log("test", set.setId)
 
     return (
-        <Text style={mainScreenStyles.subtitleText}>{ set[0].setId }</Text>
+        <Text style={mainScreenStyles.subtitleText}>{ set.setId }</Text>
     )
 }

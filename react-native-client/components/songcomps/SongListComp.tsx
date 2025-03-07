@@ -2,7 +2,7 @@ import { Image, ScrollView, Text, StyleSheet, View } from "react-native";
 import SongComp from "./SongComp";
 
 interface Props {
-    songSources: Array<any>,
+    songSources: Array<SONGOBJ>,
 }
 
 export default function SongListComp({ songSources }: Props) {
@@ -19,7 +19,7 @@ function SongList({ songSources }: Props) {
             {songSources.map(song => {
                 return (
                     <View style={localStyles.songView}>
-                        <SongComp songSource={song.route} key={song.id} name={song.name} />
+                        <SongComp songSource={song.route} key={song.songId} name={song.name} />
                     </View>
                 )
             })}

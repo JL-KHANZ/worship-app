@@ -2,15 +2,15 @@ import { Image, StyleSheet, Platform, ScrollView, Text, SafeAreaView, View, Text
 import { SelectList } from 'react-native-dropdown-select-list';
 import { fontfamily, primaryColor, secondaryColor, tertiaryColor, bgColor, mainScreenStyles } from '@/components/ui/PrefStyles';
 import React, { useEffect, useMemo } from 'react';
-import { RecentSongList, RecentSearchHistory } from '@/assets/exampleSongs/exampleDB';
+import { getRecentSongList, getRecentSearchHistory } from '@/assets/api';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import SongsListViewComp from '@/components/songcomps/SongsListViewComp';
 
+var data : Array<string>;
+var recentSongList : Array<SONGOBJ>
 
 export default function HomeScreen() {
   const [showSuggestions, setShowSuggestions] = React.useState({})
-
-  var data = RecentSearchHistory
 
   function searchTextHandler(word: any) {
     console.log("change text to ")
@@ -52,16 +52,21 @@ export default function HomeScreen() {
         <ScrollView>
           {/* recent songs */}
           <View style={{marginBlockStart: 50}}>
-            <SongsListViewComp viewTitle={"Recent Songs"} songList={RecentSongList} />
+            <SongsListViewComp viewTitle={"Recent Songs"} songList={recentSongList} />
           </View>
           {/* recent songs */}
           <View style={{marginBlockStart: 50}}>
-            <SongsListViewComp viewTitle={"Recent Songs"} songList={RecentSongList} />
+            <SongsListViewComp viewTitle={"Recent Songs"} songList={recentSongList} />
           </View>
         </ScrollView>
     </SafeAreaView>
   );
 }
+
+useEffect(() => {
+  data = getRecentSearchHistory();
+  recentSongList = getRecentSongList();
+})
 
 
 const localStyles = StyleSheet.create({
