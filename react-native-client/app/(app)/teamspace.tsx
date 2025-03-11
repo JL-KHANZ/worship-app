@@ -6,10 +6,11 @@ import {
   tertiaryColor, 
   bgColor, 
   mainScreenStyles, } from '@/components/ui/PrefStyles';
+import { useState } from 'react';
 
-const affiliatedTeams = []
 
 export default function HomeScreen() {
+
   return (
       <SafeAreaView style={{backgroundColor: bgColor, flex: 1}}>
           <Image style={[mainScreenStyles.titleIconImage, {top: -200}]} source={require('../../assets/icons/teamspacePageIcon.png')} />
@@ -20,6 +21,8 @@ export default function HomeScreen() {
 }
 
 function TeamSpaceView() {
+  const [affiliatedTeams, setAffiliatedTeams] = useState([]);
+  
   if (affiliatedTeams.length == 0) {
     return (
       <View>

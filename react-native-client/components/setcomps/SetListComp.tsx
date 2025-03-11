@@ -11,7 +11,7 @@ interface Props {
 export default function SetListComp({ sets }: Props) {
     return(
         <View style={localStyles.songListView}>
-            {sets.map((set : any) => {
+            {sets.map((set : SETOBJ) => {
                 return (
                     <View style={localStyles.songView}>
                         <SetComp set={set} key={set.setId} />

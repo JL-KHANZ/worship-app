@@ -30,10 +30,8 @@ declare global {
         teamName: string,
         teamSets: Array<number>,
     }
-
 }
-
-const defaultUser : USEROBJ = {
+export const defaultUser : USEROBJ = {
     userId: 0,
     userPwd: "example",
     name: "default user obj",
@@ -41,7 +39,7 @@ const defaultUser : USEROBJ = {
     teamId: 0,
     userSetIds: [] //setId
 }
-const defaultSet : SETOBJ = {
+export const defaultSet : SETOBJ = {
     setId: 0,
     setName: "example default set",
     setDate: "15/04/2025",
@@ -49,24 +47,23 @@ const defaultSet : SETOBJ = {
     views: 0,
     setSongs: [],
 }
-
-const examplesong1 : SONGOBJ = {   
-    route: require('../../assets/exampleSongs/song1.png'),
+export const examplesong1 : SONGOBJ = {
+    route: require('./exampleSongs/song1.png'),
     name: 'song1',
     songId: 1
 }
 const examplesong2 = {
-    route: require('../../assets/exampleSongs/song2.jpeg'),
+    route: require('./exampleSongs/song2.jpeg'),
     name: 'song2',
     songId: 2
 }
 const examplesong3 = {
-    route: require('../../assets/exampleSongs/song3.jpeg'),
+    route: require('./exampleSongs/song3.jpeg'),
     name: 'song3',
     songId: 3
 }
 const examplesong4 = {
-    route: require('../../assets/exampleSongs/song4.jpeg'),
+    route: require('./exampleSongs/song4.jpeg'),
     name: 'song4',
     songId: 4
 }

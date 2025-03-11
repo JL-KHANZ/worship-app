@@ -1,16 +1,21 @@
 import { Image, StyleSheet, Platform, ScrollView, Text, SafeAreaView, View, TextInput, TouchableOpacity } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { fontfamily, primaryColor, secondaryColor, tertiaryColor, bgColor, mainScreenStyles } from '@/components/ui/PrefStyles';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { getRecentSongList, getRecentSearchHistory } from '@/assets/api';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import SongsListViewComp from '@/components/songcomps/SongsListViewComp';
 
-var data : Array<string>;
-var recentSongList : Array<SONGOBJ>
 
 export default function HomeScreen() {
   const [showSuggestions, setShowSuggestions] = React.useState({})
+  const [data, setData] = useState<Array<string>>([]);
+  const [recentSongList, setRecentSongList] = useState<Array<SONGOBJ>>([]);
+
+  useEffect(() => {
+    setData(getRecentSearchHistory());
+    setRecentSongList(getRecentSongList());
+  }, [])
 
   function searchTextHandler(word: any) {
     console.log("change text to ")
@@ -62,11 +67,6 @@ export default function HomeScreen() {
     </SafeAreaView>
   );
 }
-
-useEffect(() => {
-  data = getRecentSearchHistory();
-  recentSongList = getRecentSongList();
-})
 
 
 const localStyles = StyleSheet.create({

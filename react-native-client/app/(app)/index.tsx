@@ -10,14 +10,19 @@ import {
 
 import { getRecommendedSongList, getRecentSongList, getTrendingSongList } from '@/assets/api';
 import SongsListViewComp from '@/components/songcomps/SongsListViewComp'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-var recentSongList : Array<SONGOBJ>
-var recommendedSongList : Array<SONGOBJ>
-var trendingSongList : Array<SONGOBJ>
 
 export default function HomeScreen() {
+  const [recentSongList, setRecentSongList] = useState<Array<SONGOBJ>>([]);
+  const [recommendedSongList, setRecommendedSongList] = useState<Array<SONGOBJ>>([]);
+  const [trendingSongList, setTrendingSongList] = useState<Array<SONGOBJ>>([]);
 
+  useEffect(() => {
+    setRecentSongList(getRecentSongList());
+    setRecommendedSongList(getRecommendedSongList());
+    setTrendingSongList(getTrendingSongList());
+  }, [])
   return (
     <SafeAreaView style={{backgroundColor: bgColor, flex: 1}}>
       <Image style={mainScreenStyles.titleIconImage} source={require('../../assets/icons/discoverPageIcon.png')} />
@@ -40,9 +45,3 @@ export default function HomeScreen() {
     </SafeAreaView>
   );
 }
-
-useEffect(() => {
-  recentSongList = getRecentSongList();
-  recommendedSongList = getRecommendedSongList();
-  trendingSongList = getTrendingSongList();
-}, [])

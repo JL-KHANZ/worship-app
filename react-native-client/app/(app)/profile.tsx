@@ -1,16 +1,20 @@
 import { Image, StyleSheet, Platform, ScrollView, Text, SafeAreaView, View } from 'react-native';
 import { fontfamily, primaryColor, secondaryColor, tertiaryColor, bgColor, mainScreenStyles } from '@/components/ui/PrefStyles';
 import RoleTagComp from '@/components/tags/RoleTagComp';
-import { getUser, getUserSets, getAllSongs } from '@/assets/api';
+import { getUser, getUserSets, getAllSongs, defaultUser } from '@/assets/api';
 import SetListComp from '@/components/setcomps/SetListComp';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-var sets : Array<SETOBJ>;
-var user : USEROBJ;
-var userId : number = 1;
 
 export default function HomeScreen() {
+  const [sets, setSets] = useState<Array<SETOBJ>>([]);
+  const [user, setUser] = useState<USEROBJ>(defaultUser);
+  const [userId, setUserId] = useState<number>(0);
 
+  useEffect(() => {
+    setSets(getUserSets(userId));
+    setUser(getUser(userId));
+  }, [])
   return (
     <SafeAreaView style={{backgroundColor: bgColor, flex: 1}}>
         <Image style={mainScreenStyles.titleIconImage} source={require('../../assets/icons/profilePageIcon.png')} />
@@ -26,10 +30,6 @@ export default function HomeScreen() {
   );
 }
 
-useEffect(() => {
-  sets = getUserSets(userId);
-  user = getUser(userId);
-})
 
 const localStyle = StyleSheet.create({
   tag: {
