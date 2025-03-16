@@ -8,7 +8,7 @@ import {
    bgColor, 
    mainScreenStyles } from '@/components/ui/PrefStyles';
 
-import { getRecommendedSongList, getRecentSongList, getTrendingSongList } from '@/assets/api';
+import { getRecommendedSongList, getRecentSongList, getTrendingSongList } from '@/api';
 import SongsListViewComp from '@/components/songcomps/SongsListViewComp'
 import { useEffect, useState } from 'react';
 

@@ -44,14 +44,14 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="teamspace"
+        name="Teamspace"
         options={{
           title: 'Team',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="map.fill" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="Profile"
         options={{
           title: 'Profile',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="person" color={color} />,

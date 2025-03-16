@@ -1,11 +1,13 @@
+import { userSignIn } from "./firebaseConfig"
 
 declare global {
     interface USEROBJ {
         userId: number,
+        userEmail: string,
         userPwd: string,
-        name: string,
-        role: string,
-        teamId: number,
+        userName: string,
+        userRole: string,
+        userTeamId: number,
         userSetIds: Array<number>,
     }
     
@@ -34,9 +36,10 @@ declare global {
 export const defaultUser : USEROBJ = {
     userId: 0,
     userPwd: "example",
-    name: "default user obj",
-    role: "default role",
-    teamId: 0,
+    userName: "default user obj",
+    userEmail: "none@gmail.com",
+    userRole: "none",
+    userTeamId: 0,
     userSetIds: [] //setId
 }
 export const defaultSet : SETOBJ = {
@@ -48,22 +51,22 @@ export const defaultSet : SETOBJ = {
     setSongs: [],
 }
 export const examplesong1 : SONGOBJ = {
-    route: require('./exampleSongs/song1.png'),
+    route: require('./assets/exampleSongs/song1.png'),
     name: 'song1',
     songId: 1
 }
 const examplesong2 = {
-    route: require('./exampleSongs/song2.jpeg'),
+    route: require('./assets/exampleSongs/song2.jpeg'),
     name: 'song2',
     songId: 2
 }
 const examplesong3 = {
-    route: require('./exampleSongs/song3.jpeg'),
+    route: require('./assets/exampleSongs/song3.jpeg'),
     name: 'song3',
     songId: 3
 }
 const examplesong4 = {
-    route: require('./exampleSongs/song4.jpeg'),
+    route: require('./assets/exampleSongs/song4.jpeg'),
     name: 'song4',
     songId: 4
 }
@@ -71,33 +74,37 @@ const examplesong4 = {
 const user : USEROBJ = {
     userId: 1,
     userPwd: "example",
-    name: "example user",
-    role: "Leader",
-    teamId: 1,
+    userName: "example user",
+    userEmail: "exampleUser@gmail.com",
+    userRole: "Leader",
+    userTeamId: 1,
     userSetIds: [1, 2] //setId
 }
 const teamMember1 : USEROBJ = {
     userId: 2,
     userPwd: "example",
-    name: "example member1",
-    role: "Sound Engineer",
-    teamId: 1,
+    userName: "example member1",
+    userEmail: "exampleMember1@gmail.com",
+    userRole: "Sound Engineer",
+    userTeamId: 1,
     userSetIds: [1],
 }
 const teamMember2 : USEROBJ = {
     userId: 3,
     userPwd: "example",
-    name: "example member2",
-    role: "Drums",
-    teamId: 1,
+    userName: "example member2",
+    userEmail: "exampleMember2@gmail.com",
+    userRole: "Drums",
+    userTeamId: 1,
     userSetIds: [2],
 }
 const teamMember3 : USEROBJ = {
     userId: 3,
     userPwd: "example",
-    name: "example member3",
-    role: "Singer",
-    teamId: 1,
+    userName: "example member3",
+    userEmail: "exampleMember3@gmail.com",
+    userRole: "Singer",
+    userTeamId: 1,
     userSetIds: [1],
 }
 
@@ -205,4 +212,8 @@ export const getTrendingSongList = () : Array<SONGOBJ> => {
 }
 export const getRecentSearchHistory = () : Array<string> => {
     return ["example search history 1", "example search history 2", "example search history 3"];
+}
+
+export const signIn = (user : USEROBJ) => {
+    userSignIn(user)
 }

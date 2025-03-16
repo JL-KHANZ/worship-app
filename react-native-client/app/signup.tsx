@@ -1,18 +1,13 @@
 import { Link } from 'expo-router';
 import React from 'react';
 import { Text, View, StyleSheet, Image, Button, TouchableOpacity } from 'react-native';
+import { useState } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list';
 import { TextInput } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { fontfamily, primaryColor, secondaryColor, tertiaryColor, bgColor, authScreenStyles } from '@/components/ui/PrefStyles';
 
-
-const signUpFunc = () => {
-    console.log("Sign Up button pressed")
-}
-
 export default function AboutScreen() {
-    const [selected, setSelected] = React.useState("")
     const data = [
         {key:'1', value:'Worship Leader'},
         {key:'2', value:'Keyboard'},
@@ -21,6 +16,31 @@ export default function AboutScreen() {
         {key:'5', value:'Sound Engineer'},
         {key:'6', value:'Vocal'},
     ]
+    const [user, setUser] = useState<USEROBJ>({
+        userEmail: '',
+        userId: 0,
+        userName: '',
+        userPwd: '',
+        userRole: '',
+        userSetIds: [],
+        userTeamId: 0,
+    })
+
+    function checkNameCrit() : boolean {
+        return false;
+    }
+    function checkPwdCrit() : boolean {
+        return false;
+    }
+    function checkEmailCrit() : boolean {
+        return false;
+    }
+
+    function signUpFunc() {
+        if (checkNameCrit() || checkPwdCrit() || checkEmailCrit()) {
+            console.log("criteria met");
+        }
+    }
     return (
         <SafeAreaView style={authScreenStyles.container}>
             <View style={authScreenStyles.view}>
@@ -29,13 +49,17 @@ export default function AboutScreen() {
                 <Text style={[{fontSize: 50, marginBlockEnd: 60, fontWeight: '900'}, authScreenStyles.text]}>Sign Up</Text>
 
                 {/* User Input */}
-                <View style={[{marginBlockEnd: 20},authScreenStyles.horizontal]}>
+                <View style={[{marginBlockEnd: 40},authScreenStyles.horizontal]}>
                     <Text style={[{fontSize: 20, marginRight: 20, fontWeight: '400'}, authScreenStyles.text]}>Username:</Text>
-                    <TextInput style={authScreenStyles.input} placeholder='username' onFocus={changeColor} />
+                    <TextInput style={authScreenStyles.input} placeholder='username' value={user.userName} onChangeText={(text) => setUser({...user, userName: text})} />
+                </View>
+                <View style={[{marginBlockEnd: 40},authScreenStyles.horizontal]}>
+                    <Text style={[{fontSize: 20, marginRight: 20, fontWeight: '400'}, authScreenStyles.text]}>Email:       </Text>
+                    <TextInput style={authScreenStyles.input} placeholder='email' value={user.userEmail} onChangeText={(text) => setUser({...user, userEmail: text})} />
                 </View>
                 <View style={[{marginBlockEnd: 40},authScreenStyles.horizontal]}>
                     <Text style={[{fontSize: 20, marginRight: 20, fontWeight: '400'}, authScreenStyles.text]}>Password: </Text>
-                    <TextInput style={authScreenStyles.input} placeholder='password'/>
+                    <TextInput style={authScreenStyles.input} placeholder='password' value={user?.userPwd} onChangeText={(text) => setUser({...user, userPwd: text})} />
                 </View>
                 <View style={[{marginBlockEnd: 40},authScreenStyles.horizontal]}>
                     <Text style={[{fontSize: 20, marginRight: 20, fontWeight: '400'}, authScreenStyles.text]}>Role in Worship Team:</Text>
@@ -44,7 +68,7 @@ export default function AboutScreen() {
                     dropdownStyles={{backgroundColor: primaryColor}} 
                     dropdownTextStyles={{color: secondaryColor}}
                     inputStyles={{color: secondaryColor}}
-                    setSelected={(val) => setSelected(val)} 
+                    setSelected={(val : any) => setUser({...user, userRole: val})} 
                     data={data} 
                     save="value"
                     />
@@ -70,8 +94,4 @@ export default function AboutScreen() {
             </TouchableOpacity>
         </SafeAreaView>
     );
-}
-
-const changeColor = () => {
-    console.log("test")
 }

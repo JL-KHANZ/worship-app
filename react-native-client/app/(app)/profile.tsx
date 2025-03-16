@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Platform, ScrollView, Text, SafeAreaView, View } from 'react-native';
 import { fontfamily, primaryColor, secondaryColor, tertiaryColor, bgColor, mainScreenStyles } from '@/components/ui/PrefStyles';
 import RoleTagComp from '@/components/tags/RoleTagComp';
-import { getUser, getUserSets, getAllSongs, defaultUser } from '@/assets/api';
+import { getUser, getUserSets, getAllSongs, defaultUser } from '@/api';
 import SetListComp from '@/components/setcomps/SetListComp';
 import { useEffect, useState } from 'react';
 
@@ -20,9 +20,9 @@ export default function HomeScreen() {
         <Image style={mainScreenStyles.titleIconImage} source={require('../../assets/icons/profilePageIcon.png')} />
         <View style={[localStyle.tag]}>
           <Text style={mainScreenStyles.titleText}>Profile</Text>
-          <RoleTagComp role={user.role} />
+          <RoleTagComp role={user.userRole} />
         </View>
-        <Text style={[mainScreenStyles.smallTitleText, {marginLeft: 80}]}>{user.name}</Text>
+        <Text style={[mainScreenStyles.smallTitleText, {marginLeft: 80}]}>{user.userName}</Text>
         <ScrollView style={{marginBlockStart: 50, marginInline: 80}}>
           <SetListComp sets={sets} />
         </ScrollView>

@@ -2,7 +2,7 @@ import { Image, StyleSheet, Platform, ScrollView, Text, SafeAreaView, View, Text
 import { SelectList } from 'react-native-dropdown-select-list';
 import { fontfamily, primaryColor, secondaryColor, tertiaryColor, bgColor, mainScreenStyles } from '@/components/ui/PrefStyles';
 import React, { useEffect, useMemo, useState } from 'react';
-import { getRecentSongList, getRecentSearchHistory } from '@/assets/api';
+import { getRecentSongList, getRecentSearchHistory } from '@/api';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import SongsListViewComp from '@/components/songcomps/SongsListViewComp';
 

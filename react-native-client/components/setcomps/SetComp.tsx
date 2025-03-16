@@ -1,7 +1,7 @@
 import { Text } from "react-native"
 import { mainScreenStyles } from "../ui/PrefStyles"
 import { useEffect } from "react";
-import { getAllSetSongs } from "@/assets/api";
+import { getAllSetSongs } from "@/api";
 
 interface Props {
     set: SETOBJ,

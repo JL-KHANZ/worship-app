@@ -55,14 +55,14 @@ export const authScreenStyles = StyleSheet.create({
         color: 'white',
         marginRight: 200,
         borderColor: primaryColor,
-        borderWidth: 1,
+        borderBottomWidth: 1,
         paddingBlockStart: 10,
         paddingBlockEnd: 10,
         borderCurve: 'circular',
         borderRadius: 5,
     },
     view: {
-        marginBlockStart: 350,
+        marginBlockStart: 230,
         backgroundColor: tertiaryColor,
         paddingBlockStart: 50
     },

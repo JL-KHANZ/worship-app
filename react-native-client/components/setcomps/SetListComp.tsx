@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet } from "react-native";
 import SetComp from "./SetComp";
 import { mainScreenStyles } from "../ui/PrefStyles";
-import { getAllSongs } from "@/assets/api";
+import { getAllSongs } from "@/api";
 import { useEffect } from "react";
 
 interface Props {
