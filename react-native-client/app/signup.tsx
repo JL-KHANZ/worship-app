@@ -7,6 +7,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { fontfamily, primaryColor, secondaryColor, tertiaryColor, bgColor, authScreenStyles } from '@/components/ui/PrefStyles';
 
+
 export default function AboutScreen() {
     const data = [
         {key:'1', value:'Worship Leader'},
@@ -26,10 +27,19 @@ export default function AboutScreen() {
         userTeamId: 0,
     })
 
+
+    const minNameLen = 3;
+    const minPwdLen = 7;
     function checkNameCrit() : boolean {
+        if (user.userName.length > minNameLen) {
+            return true;
+        }
         return false;
     }
     function checkPwdCrit() : boolean {
+        if (user.userPwd.length > minPwdLen) {
+            return true;
+        }
         return false;
     }
     function checkEmailCrit() : boolean {
@@ -37,7 +47,7 @@ export default function AboutScreen() {
     }
 
     function signUpFunc() {
-        if (checkNameCrit() || checkPwdCrit() || checkEmailCrit()) {
+        if (checkEmailCrit() && checkNameCrit() && checkPwdCrit()) {
             console.log("criteria met");
         }
     }

@@ -1,10 +1,11 @@
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 // import {...} from 'firebase/database';
 // import {...} from 'firebase/firestore';
 // import {...} from 'firebase/functions';
 // import {...} from 'firebase/storage';
 
 import { initializeApp } from "firebase/app";
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBeOoCDJLKxLEXoRIqONidOnlJEXJop5Xk",
@@ -19,6 +20,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app)
 
 export const userSignIn = (user : USEROBJ) => {
   createUserWithEmailAndPassword(auth, user.userEmail, user.userPwd)
@@ -35,3 +37,31 @@ export const userSignIn = (user : USEROBJ) => {
     return false
   });
 }
+
+// export const checkIfUserUsernameExists = async (userName : string) => {
+//   try {
+//     const usersRef = collection(db, "users"); // Assuming your collection is named 'users'
+//     const q = query(usersRef, where("username", "==", userName));
+//     const querySnapshot = await getDocs(q);
+
+//     return !querySnapshot.empty; // Returns true if username exists, false otherwise
+//   } catch (error) {
+//     console.error("Error checking uniqueness: ", error);
+//     return false;
+//   }
+// };
+
+// const checkLoginEmail = async (email, password) => {
+//   try {
+//     const userCredential = await signInWithEmailAndPassword(auth, email, password);
+//     return { exists: true, user: userCredential.user };
+//   } catch (error) {
+//     if (error.code === 'auth/user-not-found') {
+//       return { exists: false, message: 'Email not registered.' };
+//     }
+//     if (error.code === 'auth/wrong-password') {
+//       return { exists: true, message: 'Wrong password.' };
+//     }
+//     return { exists: false, message: error.message };
+//   }
+// };
