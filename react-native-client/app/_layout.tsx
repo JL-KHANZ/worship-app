@@ -31,7 +31,7 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack >
+        <Stack>
           <Stack.Screen name="signin" options={{headerShown: false}} />
           <Stack.Screen name="signup" options={{headerShown: false}} />
           <Stack.Screen name="(app)" options={{headerShown: false }} />

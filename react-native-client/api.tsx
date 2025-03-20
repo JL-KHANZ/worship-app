@@ -215,5 +215,6 @@ export const getRecentSearchHistory = () : Array<string> => {
 }
 
 export const signIn = (user : USEROBJ) => {
-    userSignIn(user)
+    console.log("from api", user);
+    // userSignIn(user)
 }

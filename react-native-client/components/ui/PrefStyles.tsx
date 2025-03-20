@@ -3,8 +3,8 @@ import { StyleSheet } from 'react-native'
 export const fontfamily = 'Helvetica'
 export const primaryColor = '#fff'
 export const secondaryColor = '#FFAE00'
-export const tertiaryColor = '#363636'
-export const bgColor = '#4E4E4E'
+export const tertiaryColor = '#202020'
+export const bgColor = '#757575'
 
 export const mainScreenStyles = StyleSheet.create({
     titleText: {
