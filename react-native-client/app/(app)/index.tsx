@@ -36,6 +36,7 @@ export default function HomeScreen() {
         <View style={{marginBlockStart: 50}}>
           <SongsListViewComp viewTitle={"Recommended Songs"} songList={recommendedSongList} />
         </View>
+        <Text>test</Text>
         {/* trending songs */}
         <View style={{marginBlockStart: 50}}>
           <SongsListViewComp viewTitle={"Trending Songs"} songList={trendingSongList} />
