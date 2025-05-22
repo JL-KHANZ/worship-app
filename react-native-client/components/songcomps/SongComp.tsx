@@ -1,31 +1,38 @@
-import { Image, TouchableOpacity, StyleSheet, Text, View } from "react-native";
-import { primaryColor, mainScreenStyles } from "../ui/PrefStyles";
+import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { bgColor, primaryColor, tertiaryColor } from "../ui/PrefStyles";
+import { responsiveStyleSheet } from "../ui/responsive";
 
-interface Props {
-    songSource: any,
-    name: string,
+
+
+type songProps = {
+  song: SONGOBJ;
+  onPressSong: (song: SONGOBJ) => void;
+  cardColor: string
 }
 
-export default function SongComp({ songSource, name }: Props) {
-    return (
-        <View>
-            <Image source={songSource} style={localStyles.image}/>
-            <Text numberOfLines={1} style={[mainScreenStyles.subtitleText, localStyles.text]}>{name}</Text>
-        </View>
-    )
+export default function SongComp({song, onPressSong, cardColor} : songProps) {
+  return (
+    <TouchableOpacity style={[styles.card, {backgroundColor: cardColor}]} onPress={() => onPressSong?.(song)}>
+      <Text style={styles.cardText}>{song.name}</Text>
+    </TouchableOpacity>
+  )
 }
 
-const localStyles = StyleSheet.create({
-    image: {
-        width: 150,
-        height: 150,
-        borderCurve: 'circular',
-        borderRadius: 10,
-    },
-    text: {
-        textAlign: 'center', 
-        marginBlockStart: 10, 
-        width: 150, 
-        alignItems: 'center'
-    }
+const styles = responsiveStyleSheet({
+  card: {
+    width: 120,
+    height: 150,
+    marginRight: 10,
+    borderRadius: 12,
+    padding: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 2,
+  },
+  cardText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: primaryColor,
+    textAlign: 'center',
+  },
 })

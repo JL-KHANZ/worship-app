@@ -32,13 +32,6 @@ export default function TabLayout() {
           }),
         }}>
         <Tabs.Screen
-          name="search"
-          options={{
-            title: 'Search',
-            tabBarIcon: ({ color }) => <IconSymbol size={28} name="magnifyingglass.circle" color={color} />,
-          }}
-        />
-        <Tabs.Screen
           name="index"
           options={{
             title: 'Home',

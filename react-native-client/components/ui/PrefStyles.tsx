@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native'
 
 export const fontfamily = 'Helvetica'
-export const primaryColor = '#C53D3D'
+export const primaryColor = '#5B21B6'
 export const secondaryColor = '#fff5f0'
 export const tertiaryColor = '#9CA3AF'
-export const bgColor = '#fff5f0'
+export const bgColor = '#fefff2'
 
 export const mainScreenStyles = StyleSheet.create({
     titleText: {
