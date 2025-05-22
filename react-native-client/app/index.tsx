@@ -1,6 +1,10 @@
 import { View } from "react-native";
-import AboutScreen from "./signin";
+import SignIn from "./signin";
+import { useEffect } from "react";
+import { router } from "expo-router";
 
 export default function App() {
-    return <AboutScreen></AboutScreen>
+    return (
+        <SignIn></SignIn>
+    )
 }

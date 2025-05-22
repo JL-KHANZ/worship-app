@@ -8,10 +8,13 @@ interface Props {
 }
 export default function SongsListViewComp({ songList, viewTitle }: Props ) {
 
+    function viewSong() {
+      console.log("test")
+    }
     return (
         <ScrollView style={{marginLeft: 30}}>
             <Text style={[mainScreenStyles.smallTitleText, {marginBlockEnd: 20}]}>{viewTitle}</Text>
-            <SongListComp songSources={songList} />
+            <SongListComp songs={songList} onPressSong={viewSong} />
         </ScrollView>
     )
 }

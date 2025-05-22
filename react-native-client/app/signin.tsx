@@ -1,66 +1,131 @@
-import { Link } from 'expo-router';
-import { Text, View, StyleSheet, Image, Button, TouchableOpacity, TouchableHighlight } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { fontfamily, primaryColor, secondaryColor, tertiaryColor, bgColor, authScreenStyles } from '@/components/ui/PrefStyles';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Pressable, Alert } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { defaultUser, signIn } from '@/api';
+import { responsiveStyleSheet } from '@/components/ui/responsive';
+import { clientUserSignIn } from '@/api';
+import { useUser } from '@/context/userContext';
+import { fontfamily, primaryColor, tertiaryColor } from '@/components/ui/PrefStyles';
 
+export default function SignIn() {
+  const router = useRouter();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [isWrongCredentials, setIsWrongCredentials] = useState<boolean>(false);
 
-export default function AboutScreen() {
-    const [user, setUser] = useState<USEROBJ>({
-        userEmail: '', 
-        userId: 0, 
-        userName: '', 
-        userPwd: '', 
-        userRole: '', 
-        userSetIds: [], 
-        userTeamId: 0
-    });
-
-    const signInFunc = () => {
-        console.log("input user", user.userName)
-        try {
-            signIn(user);
-        } catch(e) {
-            console.log(e);
-        }
+  const { user, saveUser } = useUser();
+  const handleSignIn = async () => {
+    const res = await clientUserSignIn(email, password);
+    if (res) {
+      saveUser(res);
+      router.replace('/(app)/search');
+    } else {
+      Alert.alert("로그인 실패", "아이디와 비밀번호를 확인해 주세요");
+      setIsWrongCredentials(true);
     }
+  };
 
-    return (
-        <SafeAreaView style={authScreenStyles.container}>
-            <View style={authScreenStyles.view}>
-                
-                {/* Title */}
-                <Text style={[{fontSize: 50, marginBlockEnd: 60, fontWeight: '900'}, authScreenStyles.text]}>Sign In</Text>
+  function toSignUp() {
+    router.replace('/signup');
+  }
 
-                {/* User Input */}
-                <View style={[{marginBlockEnd: 40},authScreenStyles.horizontal]}>
-                    <Text style={[{fontSize: 20, marginRight: 20, fontWeight: '400'}, authScreenStyles.text]}>Email: </Text>
-                    <TextInput style={authScreenStyles.input} placeholder='password' value={user.userEmail} onChangeText={(text) => setUser({...user, userEmail: text})} />
-                </View>
-                <View style={[{marginBlockEnd: 40},authScreenStyles.horizontal]}>
-                    <Text style={[{fontSize: 20, marginRight: 20, fontWeight: '400'}, authScreenStyles.text]}>Password: </Text>
-                    <TextInput style={authScreenStyles.input} placeholder='password' value={user.userPwd} onChangeText={(text) => setUser({...user, userPwd: text})} />
-                </View>
+  return (
+    <KeyboardAvoidingView
+      style={auth_styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <View style={auth_styles.innerContainer}>
+        <Text style={auth_styles.title}>로그인</Text>
 
-                {/* Sign In Button */}
-                <TouchableOpacity onPress={signInFunc} style={authScreenStyles.button}>
-                    <Text style={[{fontSize: 20, fontWeight: '700', fontFamily: fontfamily, color: primaryColor}]}>Sign In</Text>
-                </TouchableOpacity>
-            </View>
+        <TextInput
+          style={isWrongCredentials? [auth_styles.input, {borderColor: primaryColor}] : auth_styles.input}
+          placeholder="Email"
+          placeholderTextColor="#999"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          onChangeText={setEmail}
+          value={email}
+        />
 
-            {/* Go To Button */}
-            <TouchableOpacity style={{marginBlockStart: 15, marginLeft: 60}}>
-                <Link href={'/signup'}>
-                    <Text style={{
-                        color: secondaryColor,
-                        textDecorationLine: 'underline',
-                        fontWeight: '200',
-                        fontFamily: fontfamily
-                    }}>Don't have an account? Press here to Sign Up</Text>
-                </Link>
-            </TouchableOpacity>
-        </SafeAreaView>
-    );
+        <TextInput
+          style={isWrongCredentials? [auth_styles.input, {borderColor: primaryColor}] : auth_styles.input}
+          placeholder="Password"
+          placeholderTextColor="#999"
+          secureTextEntry
+          onChangeText={setPassword}
+          value={password}
+        />
+
+        <TouchableOpacity style={auth_styles.button} onPress={handleSignIn}>
+          <Text style={auth_styles.buttonText}>로그인</Text>
+        </TouchableOpacity>
+
+        {isWrongCredentials ? 
+        <Pressable>
+          <Text style={[auth_styles.footer, {color: primaryColor, textDecorationLine: "underline"}]}>비밀번호를 잊으셨나요?</Text>
+        </Pressable>
+        :
+        <Text style={auth_styles.footer}>신촌하나교회</Text>
+        }
+      </View>
+      <Pressable onPress={toSignUp}>
+        <Text style={auth_styles.footer}>회원가입하러 가기</Text>
+      </Pressable>
+    </KeyboardAvoidingView>
+  );
 }
+
+export const auth_styles = responsiveStyleSheet({
+  container: {
+    flex: 1,
+    backgroundColor: '#F9FAFB',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+  },
+  innerContainer: {
+    width: '100%',
+    maxWidth: 500,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 32,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 12,
+    elevation: 6,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: '500',
+    color: primaryColor,
+    marginBottom: 24,
+    textAlign: 'center',
+  },
+  input: {
+    height: 50,
+    borderColor: '#E5E7EB',
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    marginBottom: 16,
+    fontSize: 16,
+    backgroundColor: '#F3F4F6',
+  },
+  button: {
+    backgroundColor: primaryColor,
+    borderRadius: 12,
+    paddingVertical: 14,
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  footer: {
+    marginTop: 24,
+    textAlign: 'center',
+    color: tertiaryColor,
+    fontSize: 14,
+  },
+});

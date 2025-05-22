@@ -1,31 +1,31 @@
 import { StyleSheet } from 'react-native'
 
 export const fontfamily = 'Helvetica'
-export const primaryColor = '#fff'
-export const secondaryColor = '#FFAE00'
-export const tertiaryColor = '#202020'
-export const bgColor = '#757575'
+export const primaryColor = '#C53D3D'
+export const secondaryColor = '#fff5f0'
+export const tertiaryColor = '#9CA3AF'
+export const bgColor = '#fff5f0'
 
 export const mainScreenStyles = StyleSheet.create({
     titleText: {
-        color: primaryColor,
+        color: tertiaryColor,
         fontFamily: fontfamily,
         fontSize: 70,
         marginBlockStart: 100,
         marginLeft: 70
     },
     smallTitleText: {
-        color: secondaryColor,
+        color: tertiaryColor,
         fontFamily: fontfamily,
         fontSize: 30,
     },
     text: {
-        color: primaryColor,
+        color: tertiaryColor,
         fontFamily: fontfamily,
         fontSize: 23,
     },
     subtitleText: {
-        color: primaryColor,
+        color: tertiaryColor,
         fontFamily: fontfamily,
         fontSize: 18,
     },

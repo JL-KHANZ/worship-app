@@ -8,10 +8,10 @@ interface Props {
 
 export default function SongComp({ songSource, name }: Props) {
     return (
-        <TouchableOpacity>
-            <Image source={songSource} style={localStyles.image} />
+        <View>
+            <Image source={songSource} style={localStyles.image}/>
             <Text numberOfLines={1} style={[mainScreenStyles.subtitleText, localStyles.text]}>{name}</Text>
-        </TouchableOpacity>
+        </View>
     )
 }
 

@@ -132,6 +132,39 @@ const team1 : TEAM = {
     teamSets: [1, 2],
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+// auth
+export async function clientUserSignUp(username : string, email : string, password: string) : Promise<boolean> {
+  return true;
+}
+export async function clientUserSignIn(email : string, password : string) : Promise<USEROBJ | null> {
+  return user
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const getAllUsers = () : Array<USEROBJ> => {
     return [user, teamMember1, teamMember2, teamMember3];
 }
@@ -212,9 +245,4 @@ export const getTrendingSongList = () : Array<SONGOBJ> => {
 }
 export const getRecentSearchHistory = () : Array<string> => {
     return ["example search history 1", "example search history 2", "example search history 3"];
-}
-
-export const signIn = (user : USEROBJ) => {
-    console.log("from api", user);
-    // userSignIn(user)
 }
