@@ -5,14 +5,16 @@ import { getRecentSongList, getRecommendedSongList, getTrendingSongList } from '
 import SearchBar from '@/components/SearchBar';
 import { bgColor, primaryColor } from '@/components/ui/PrefStyles';
 
-const TITLE_HEIGHT = 50;
-const MAX_FONT_SIZE = 50;
-const MIN_FONT_SIZE = MAX_FONT_SIZE * 0.67;
+export const TITLE_HEIGHT = 50;
+export const MAX_FONT_SIZE = 50;
+export const MIN_FONT_SIZE = MAX_FONT_SIZE * 0.67;
+export const INPUT_RANGE = [0, 50]
+export const OUTPUT_RANGE = [1, 0.7]
 
 export default function HomeScreen() {
-  const [recentSongList, setRecentSongList] = useState<SONGOBJ[]>([]);
-  const [recommendedSongList, setRecommendedSongList] = useState<SONGOBJ[]>([]);
-  const [trendingSongList, setTrendingSongList] = useState<SONGOBJ[]>([]);
+  const [recentSongList, setRecentSongList] = useState<SONGCLIENT[]>([]);
+  const [recommendedSongList, setRecommendedSongList] = useState<SONGCLIENT[]>([]);
+  const [trendingSongList, setTrendingSongList] = useState<SONGCLIENT[]>([]);
   const [searchText, setSearchText] = useState<string>("")
 
   useEffect(() => {
@@ -24,14 +26,14 @@ export default function HomeScreen() {
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const fontSize = scrollY.interpolate({
-    inputRange: [0, 50],
+    inputRange: INPUT_RANGE,
     outputRange: [MAX_FONT_SIZE, MIN_FONT_SIZE],
     extrapolate: 'clamp',
   });
 
   const opacity = scrollY.interpolate({
-    inputRange: [0, 50],
-    outputRange: [1, 0.7],
+    inputRange: INPUT_RANGE,
+    outputRange: OUTPUT_RANGE,
     extrapolate: 'clamp',
   });
 
@@ -75,7 +77,7 @@ export default function HomeScreen() {
           { useNativeDriver: false }
         )}
       >
-        <View style={{ height: TITLE_HEIGHT }} /> {/* Padding for fixed title */}
+        <View style={{ height: TITLE_HEIGHT }} />
         <SongsListViewComp viewTitle="Recent Songs" songList={recentSongList} cardColor='#ffcbe1' />
         <SongsListViewComp viewTitle="Recommended Songs" songList={recommendedSongList} cardColor='#bcd8ec' />
         <SongsListViewComp viewTitle="Trending Songs" songList={trendingSongList} cardColor='#f9e1a8' />

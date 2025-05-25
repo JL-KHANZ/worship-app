@@ -6,8 +6,8 @@ import SongComp from './SongComp';
 
 interface SongsListViewCompProps {
   viewTitle: string;
-  songList: SONGOBJ[];
-  onPressSong?: (song: SONGOBJ) => void;
+  songList: SONGCLIENT[];
+  onPressSong?: (song: SONGCLIENT) => void;
   cardColor: string
 }
 
@@ -18,7 +18,7 @@ const SongsListViewComp: React.FC<SongsListViewCompProps> = ({ viewTitle, songLi
       <Text style={styles.sectionTitle}>{viewTitle}</Text>
       <FlatList
         data={songList}
-        keyExtractor={(item) => item.songId.toString()}
+        keyExtractor={(item) => item.id}
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.listContent}
@@ -37,7 +37,7 @@ const SongsListViewComp: React.FC<SongsListViewCompProps> = ({ viewTitle, songLi
 const styles = responsiveStyleSheet({
   sectionContainer: {
     paddingVertical: 20,
-    marginBottom: 20,
+    marginBottom: 0,
   },
   sectionTitle: {
     fontSize: 18,

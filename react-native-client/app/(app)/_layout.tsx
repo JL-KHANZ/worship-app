@@ -14,7 +14,6 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <UserProvider>
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: primaryColor,
@@ -32,6 +31,13 @@ export default function TabLayout() {
           }),
         }}>
         <Tabs.Screen
+          name="teamspace"
+          options={{
+            title: 'Team',
+            tabBarIcon: ({ color }) => <IconSymbol size={28} name="map.fill" color={color} />,
+          }}
+        />
+        <Tabs.Screen
           name="index"
           options={{
             title: 'Home',
@@ -39,20 +45,12 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="Teamspace"
-          options={{
-            title: 'Team',
-            tabBarIcon: ({ color }) => <IconSymbol size={28} name="map.fill" color={color} />,
-          }}
-        />
-        <Tabs.Screen
-          name="Profile"
+          name="profile"
           options={{
             title: 'Profile',
             tabBarIcon: ({ color }) => <IconSymbol size={28} name="person" color={color} />,
           }}
         />
       </Tabs>
-    </UserProvider>
   );
 }

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { responsiveStyleSheet } from '@/components/ui/responsive';
 import { clientUserSignIn } from '@/api';
 import { useUser } from '@/context/userContext';
-import { fontfamily, primaryColor, tertiaryColor } from '@/components/ui/PrefStyles';
+import { primaryColor, tertiaryColor } from '@/components/ui/PrefStyles';
 
 export default function SignIn() {
   const router = useRouter();
@@ -15,9 +15,16 @@ export default function SignIn() {
   const { user, saveUser } = useUser();
   const handleSignIn = async () => {
     const res = await clientUserSignIn(email, password);
-    if (res) {
-      saveUser(res);
-      router.replace('/(app)/search');
+    if (res != null) {
+      const saveU : USERCLIENT = {
+        uid: "1234",
+        username: "josh",
+        role: "Leader",
+        teamId: "1",
+        email: "joshuahanlim777@gmail.com",
+      };
+      saveUser(saveU);
+      router.replace('/(app)');
     } else {
       Alert.alert("로그인 실패", "아이디와 비밀번호를 확인해 주세요");
       setIsWrongCredentials(true);

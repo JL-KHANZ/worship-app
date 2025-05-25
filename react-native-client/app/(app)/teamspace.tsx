@@ -9,7 +9,7 @@ import {
 import { useState } from 'react';
 
 
-export default function HomeScreen() {
+export default function TeamSpaceScreen() {
 
   return (
       <SafeAreaView style={{backgroundColor: bgColor, flex: 1}}>

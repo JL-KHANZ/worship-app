@@ -4,16 +4,15 @@ import { useEffect } from "react";
 import { getAllSetSongs } from "@/api";
 
 interface Props {
-    set: SETOBJ,
+  set: SETCLIENT,
 }
 
-var setSongs : Array<SONGOBJ>;
-export default function SetComp({set} : Props) {
+var setSongs: Array<SONGCLIENT>;
+export default function SetComp({ set }: Props) {
 
-    setSongs = getAllSetSongs(set.setId);
-    console.log("test", set.setId)
+  setSongs = getAllSetSongs(set.id);
 
-    return (
-        <Text style={mainScreenStyles.subtitleText}>{ set.setId }</Text>
-    )
+  return (
+    <Text style={mainScreenStyles.subtitleText}>{set.id}</Text>
+  )
 }

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { mainScreenStyles, primaryColor, secondaryColor } from "../ui/PrefStyles";
 
 interface Props {
-    role: String
+    role: String | undefined,
 }
 
 export default function RoleTagComp({ role }: Props) {

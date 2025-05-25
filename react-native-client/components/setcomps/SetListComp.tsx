@@ -5,28 +5,28 @@ import { getAllSongs } from "@/api";
 import { useEffect } from "react";
 
 interface Props {
-    sets : Array<SETOBJ>,
+  sets: Array<SETCLIENT>,
 }
 
 export default function SetListComp({ sets }: Props) {
-    return(
-        <View style={localStyles.songListView}>
-            {sets.map((set : SETOBJ) => {
-                return (
-                    <View style={localStyles.songView}>
-                        <SetComp set={set} key={set.setId} />
-                    </View>
-                )
-            })}
-        </View>
-    )
+  return (
+    <View style={localStyles.songListView}>
+      {sets.map((set: SETCLIENT) => {
+        return (
+          <View style={localStyles.songView}>
+            <SetComp set={set} key={set.id} />
+          </View>
+        )
+      })}
+    </View>
+  )
 }
 
 const localStyles = StyleSheet.create({
-    songListView: {
-        flexDirection: 'row'
-    },
-    songView: {
-        marginRight: 30,
-    }
+  songListView: {
+    flexDirection: 'row'
+  },
+  songView: {
+    marginRight: 30,
+  }
 })
