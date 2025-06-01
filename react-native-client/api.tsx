@@ -1,3 +1,4 @@
+import axios from "axios";
 
 
 declare global {
@@ -11,12 +12,14 @@ declare global {
   interface SONGCLIENT {
     id: string
     name: string,
-    key: string | null,
+    repKey: string | null,
+    keys: Array<string> | null,
     artist: string | null,
     url: string,
-    setId: string | null,
     teamId: string | null,
   }
+
+  // sets should keep track of songs on their own
   interface SETCLIENT {
     id: string,
     name: string,
@@ -24,14 +27,13 @@ declare global {
     lastViewed: string,
     views: number,
     ownerId: string,
+    songs: Array<SONGCLIENT>,
   }
   interface TEAMCLIENT {
     teamId: number,
     teamName: string,
   }
 }
-
-
 
 // auth
 export async function clientUserSignUp(username: string, email: string, password: string): Promise<boolean> {
@@ -41,7 +43,23 @@ export async function clientUserSignIn(email: string, password: string): Promise
   return user
 }
 
-
+// songs
+const PUBLIC_IMAGEKIT_KEY = "public_F/HZwWGdM5bx0nOxlmH3zhnSjQ0="
+// export async function getSongImage(route : string) {
+//   try {
+//     const response = await axios.request({
+//       method: 'GET',
+//       url: 'https://ik.imagekit.io/hanaworship/default-image.jpg?updatedAt=1743827390129',
+//       headers: {Accept: 'application/json', Authorization: 'Basic 123'}
+//     })
+//     console.log(response)
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
+export async function getSong(id : string) {
+  return examplesong3
+}
 
 
 
@@ -144,7 +162,14 @@ export const getRecentSearchHistory = (): Array<string> => {
 
 
 
-
+export async function postSet(songs : Array<SONGCLIENT>) {
+  try{
+    const res = "setId"
+    return res
+  }catch (error) {
+  }
+  return false
+}
 
 
 
@@ -217,49 +242,50 @@ export const defaultUser: USERCLIENT = {
   role: "none",
   teamId: "0",
 }
+export const examplesong1: SONGCLIENT = {
+  url: "https://ik.imagekit.io/hanaworship/%E1%84%92%E1%85%A1%E1%84%82%E1%85%B3%E1%86%AF%E1%84%8B%E1%85%B4_%E1%84%86%E1%85%AE%E1%86%AB%E1%84%8B%E1%85%B3%E1%86%AF_%E1%84%8B%E1%85%A7%E1%84%89%E1%85%A9%E1%84%89%E1%85%A5_G.jpeg?updatedAt=1748702405053",
+  artist: "아이자야식스티원",
+  name: '내가 소망하는 아버지 나라',
+  repKey: "A",
+  keys: ["G", "B"],
+  id: "1",
+  teamId: "1",
+}
+const examplesong2 : SONGCLIENT = {
+  url: 'https://ik.imagekit.io/hanaworship/%E1%84%82%E1%85%A1%E1%84%8B%E1%85%B4_%E1%84%8B%E1%85%A8%E1%84%87%E1%85%A2%E1%84%85%E1%85%B3%E1%86%AF_%E1%84%87%E1%85%A1%E1%86%AE%E1%84%8B%E1%85%B3%E1%84%89%E1%85%A9%E1%84%89%E1%85%A5_E.jpeg?updatedAt=1748669213484',
+  artist: null,
+  name: 'song2',
+  repKey: "A",
+  keys: ["G", "B"],
+  id: "2",
+  teamId: "1"
+}
+const examplesong3 : SONGCLIENT = {
+  url: 'https://ik.imagekit.io/hanaworship/%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%82%E1%85%B3%E1%86%BC%E1%84%92%E1%85%A1%E1%84%89%E1%85%B5%E1%86%AB_%E1%84%82%E1%85%A1%E1%84%8B%E1%85%B4_%E1%84%8C%E1%85%AE_%E1%84%92%E1%85%A1%E1%84%82%E1%85%A1%E1%84%82%E1%85%B5%E1%86%B7%E1%84%8B%E1%85%B3%E1%86%AB_B.jpeg?updatedAt=1748669332785',
+  artist: null,
+  name: 'song3',
+  repKey: "A",
+  keys: ["G", "B"],
+  id: "3",
+  teamId: "1"
+}
+const examplesong4 : SONGCLIENT = {
+  url: 'https://ik.imagekit.io/hanaworship/%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%82%E1%85%B3%E1%86%BC%E1%84%92%E1%85%A1%E1%84%89%E1%85%B5%E1%86%AB_%E1%84%92%E1%85%A1%E1%84%82%E1%85%A1%E1%84%82%E1%85%B5%E1%86%B7_B.jpeg?updatedAt=1748670114691',
+  artist: null,
+  name: 'song4',
+  repKey: "A",
+  keys: ["G", "B"],
+  id: "4",
+  teamId: "1"
+}
 export const defaultSet: SETCLIENT = {
   id: "0",
   name: "example default set",
   date: "15/04/2025",
   lastViewed: "21/01/2025",
   views: 0,
-  ownerId: "1234"
-}
-export const examplesong1: SONGCLIENT = {
-  url: require('./assets/exampleSongs/song1.png'),
-  artist: "아이자야식스티원",
-  name: '내가 소망하는 아버지 나라',
-  key: "A",
-  id: "1",
-  setId: "2",
-  teamId: "1",
-}
-const examplesong2 = {
-  url: require('./assets/exampleSongs/song2.jpeg'),
-  artist: null,
-  name: 'song2',
-  key: "A",
-  id: "2",
-  setId: "2",
-  teamId: "1"
-}
-const examplesong3 = {
-  url: require('./assets/exampleSongs/song3.jpeg'),
-  artist: null,
-  name: 'song3',
-  key: "A",
-  id: "3",
-  setId: "2",
-  teamId: "1"
-}
-const examplesong4 = {
-  url: require('./assets/exampleSongs/song4.jpeg'),
-  artist: null,
-  name: 'song4',
-  key: "A",
-  id: "4",
-  setId: "2",
-  teamId: "1"
+  ownerId: "1234",
+  songs: [examplesong1, examplesong2]
 }
 
 const user: USERCLIENT = {
@@ -297,15 +323,18 @@ const set1: SETCLIENT = {
   date: "15/04/2025",
   lastViewed: "21/01/2025",
   views: 7,
-  ownerId: "1234"
+  ownerId: "1234",
+  songs: [examplesong1, examplesong2]
 }
+
 const set2: SETCLIENT = {
   id: "2",
   name: "example set2",
   date: "15/06/2025",
   lastViewed: "21/02/2025",
   views: 7,
-  ownerId: "1234"
+  ownerId: "1234",
+  songs: [examplesong1, examplesong2]
 }
 
 const team1: TEAMCLIENT= {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { bgColor, primaryColor, tertiaryColor } from './ui/PrefStyles';
+import { bgColor, primaryColor, secondaryColor, tertiaryColor } from './ui/PrefStyles';
 import { responsiveStyleSheet } from './ui/responsive';
 
 interface SearchBarProps {
@@ -41,7 +41,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         />
       </View>
       {focused && filteredSearches.length > 0 && (
-        <View style={styles.dropdown}>
+        <View style={staticStyles.dropdown}>
           <FlatList
             data={filteredSearches}
             keyExtractor={(item, index) => index.toString()}
@@ -59,6 +59,23 @@ const SearchBar: React.FC<SearchBarProps> = ({
     </View>
   );
 };
+
+const staticStyles = StyleSheet.create({
+  dropdown: {
+    backgroundColor: primaryColor,
+    borderRadius: 12,
+    marginTop: 0,
+    marginHorizontal: 2,
+    maxHeight: 150,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    zIndex: 1000,
+  },
+
+})
 
 const styles = responsiveStyleSheet({
   container: {
@@ -81,28 +98,13 @@ const styles = responsiveStyleSheet({
     fontSize: 12,
     color: '#111827',
   },
-  dropdown: {
-    backgroundColor: bgColor,
-    borderRadius: 12,
-    borderColor: primaryColor,
-    borderWidth: 1,
-    marginTop: 0,
-    marginHorizontal: 2,
-    maxHeight: 150,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    zIndex: 1000,
-  },
   dropdownItem: {
     paddingVertical: 10,
     paddingHorizontal: 16,
   },
   dropdownText: {
-    fontSize: 14,
-    color: '#374151',
+    fontSize: 11,
+    color: bgColor,
   },
 });
 

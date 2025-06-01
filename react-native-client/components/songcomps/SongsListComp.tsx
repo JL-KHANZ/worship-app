@@ -8,10 +8,12 @@ interface SongsListViewCompProps {
   viewTitle: string;
   songList: SONGCLIENT[];
   onPressSong?: (song: SONGCLIENT) => void;
+  onSelectSong?: (song: SONGCLIENT) => void;
+  onDeselectSong?: (song: SONGCLIENT) => void;
   cardColor: string
 }
 
-const SongsListViewComp: React.FC<SongsListViewCompProps> = ({ viewTitle, songList, onPressSong, cardColor }) => {
+const SongsListViewComp: React.FC<SongsListViewCompProps> = ({ viewTitle, songList, onPressSong, onSelectSong, onDeselectSong, cardColor }) => {
 
   return (
     <View style={styles.sectionContainer}>
@@ -19,13 +21,13 @@ const SongsListViewComp: React.FC<SongsListViewCompProps> = ({ viewTitle, songLi
       <FlatList
         data={songList}
         keyExtractor={(item) => item.id}
-        horizontal
-        showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.listContent}
         renderItem={({ item }) => (
           <SongComp
           song={item} 
           onPressSong={() => onPressSong?.(item)}
+          onSelectSong={() => onSelectSong?.(item)}
+          onDeselectSong={() => onDeselectSong?.(item)}
           cardColor={cardColor}
           />
         )}
@@ -44,10 +46,6 @@ const styles = responsiveStyleSheet({
     fontWeight: '400',
     marginBottom: 8,
     color: tertiaryColor,
-    paddingHorizontal: 35,
-  },
-  listContent: {
-    paddingLeft: 33,
   },
 });
 

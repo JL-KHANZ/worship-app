@@ -1,14 +1,11 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
-
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { primaryColor } from '@/components/ui/PrefStyles';
-import { UserProvider } from '../../context/userContext';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -29,25 +26,27 @@ export default function TabLayout() {
             default: {
             },
           }),
-        }}>
+        }}
+        
+        >
         <Tabs.Screen
           name="teamspace"
           options={{
-            title: 'Team',
+            title: '팀',
             tabBarIcon: ({ color }) => <IconSymbol size={28} name="map.fill" color={color} />,
           }}
         />
         <Tabs.Screen
           name="index"
           options={{
-            title: 'Home',
+            title: '홈',
             tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
           }}
         />
         <Tabs.Screen
           name="profile"
           options={{
-            title: 'Profile',
+            title: '프로필',
             tabBarIcon: ({ color }) => <IconSymbol size={28} name="person" color={color} />,
           }}
         />

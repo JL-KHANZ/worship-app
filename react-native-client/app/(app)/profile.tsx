@@ -1,11 +1,10 @@
-import { Image, StyleSheet, Platform, ScrollView, Text, SafeAreaView, View, Animated } from 'react-native';
+import { Image, StyleSheet, Platform, ScrollView, Text, SafeAreaView, View, Animated, FlatList, Alert } from 'react-native';
 import { fontfamily, primaryColor, secondaryColor, tertiaryColor, bgColor, mainScreenStyles } from '@/components/ui/PrefStyles';
-import RoleTagComp from '@/components/tags/RoleTagComp';
 import { getUser, getUserSets, getAllSongs, defaultUser } from '@/api';
-import SetListComp from '@/components/setcomps/SetListComp';
 import { useEffect, useRef, useState } from 'react';
 import { useUser } from '@/context/userContext';
 import { INPUT_RANGE, MAX_FONT_SIZE, MIN_FONT_SIZE, OUTPUT_RANGE } from '.';
+import { responsiveStyleSheet } from '@/components/ui/responsive';
 
 export default function ProfileScreen() {
   const [sets, setSets] = useState<Array<SETCLIENT>>([]);
@@ -14,8 +13,14 @@ export default function ProfileScreen() {
   const { user } = useUser()
 
   useEffect(() => {
-    setSets(getUserSets(userId));
-    console.log("t", user)
+    async function getData() {
+      const res = await getUserSets(userId)
+      if (!res) {
+
+      } else {
+        setSets(res)
+      }
+    }
   }, [])
 
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -36,7 +41,7 @@ export default function ProfileScreen() {
     <SafeAreaView style={{ backgroundColor: bgColor, flex: 1 }}>
       <View style={styles.titleWrapper}>
         <Animated.Text style={[styles.pageTitle, { fontSize, opacity }]}>
-          Profile
+          {user?.username}
         </Animated.Text>
       </View>
       <Animated.ScrollView
@@ -48,7 +53,15 @@ export default function ProfileScreen() {
           { useNativeDriver: false }
         )}
       >
-        <Text style={styles.pageTitle}>{user?.username}유저정보</Text>
+      <Text style={setCompStyles.header}>내 콘티</Text>
+      <FlatList
+        data={sets}
+        renderItem={({ item }) => (
+          <View style={setCompStyles.view}>
+            <Text style={setCompStyles.title}>{item.name}</Text>
+          </View>
+        )}
+      />
       </Animated.ScrollView>
     </SafeAreaView>
   );
@@ -71,6 +84,32 @@ const styles = StyleSheet.create({
     color: primaryColor,
   },
   scrollContent: {
-    paddingTop: 130
+    paddingTop: 130,
+    paddingHorizontal: 55,
+  },
+  roleLabel: {
+    fontSize: 30,
+    fontWeight: "100",
+    color: primaryColor
+  }
+})
+
+const setCompStyles = responsiveStyleSheet({
+  header: {
+    color: tertiaryColor,
+    fontSize: 20,
+    fontWeight: "600",
+    marginBottom: 8
+  },
+  view: {
+    borderWidth: 1,
+    borderColor: primaryColor,
+    borderRadius: 10,
+    padding: 10,
+    width: 100,
+    height: 100
+  },
+  title: {
+
   }
 })

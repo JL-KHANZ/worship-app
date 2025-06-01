@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { responsiveStyleSheet } from '@/components/ui/responsive';
 import { clientUserSignIn } from '@/api';
 import { useUser } from '@/context/userContext';
-import { primaryColor, tertiaryColor } from '@/components/ui/PrefStyles';
+import { bgColor, primaryColor, secondaryColor, tertiaryColor } from '@/components/ui/PrefStyles';
 
 export default function SignIn() {
   const router = useRouter();
@@ -83,56 +83,56 @@ export default function SignIn() {
 export const auth_styles = responsiveStyleSheet({
   container: {
     flex: 1,
-    backgroundColor: '#F9FAFB',
+    backgroundColor: bgColor,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 24,
+    paddingHorizontal: 50,
   },
   innerContainer: {
     width: '100%',
     maxWidth: 500,
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    padding: 32,
+    backgroundColor: secondaryColor,
+    borderRadius: 10,
+    padding: 50,
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 12,
+    shadowRadius: 7,
     elevation: 6,
   },
   title: {
-    fontSize: 32,
+    fontSize: 20,
     fontWeight: '500',
     color: primaryColor,
     marginBottom: 24,
     textAlign: 'center',
   },
   input: {
-    height: 50,
-    borderColor: '#E5E7EB',
+    height: 30,
+    borderColor: '#fff',
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 5,
     paddingHorizontal: 16,
     marginBottom: 16,
-    fontSize: 16,
-    backgroundColor: '#F3F4F6',
+    fontSize: 10,
+    backgroundColor: "#fff",
   },
   button: {
     backgroundColor: primaryColor,
-    borderRadius: 12,
+    borderRadius: 5,
     paddingVertical: 14,
     alignItems: 'center',
     marginTop: 8,
   },
   buttonText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 10,
     fontWeight: '600',
   },
   footer: {
     marginTop: 24,
     textAlign: 'center',
     color: tertiaryColor,
-    fontSize: 14,
+    fontSize: 8,
   },
 });
