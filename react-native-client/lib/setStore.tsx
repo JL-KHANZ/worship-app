@@ -20,3 +20,14 @@ export const useSongStore = create<SongStore>((set) => ({
   selectedSong: null,
   setSong: (song) => set({ selectedSong: song })
 }))
+
+
+type SetViewStore = {
+  selectedSet: SETCLIENT | null,
+  setSet: (set: SETCLIENT) => void
+}
+
+export const useSetViewStore = create<SetViewStore>((set) => ({
+  selectedSet: null,
+  setSet: (item) => set({ selectedSet: item })
+}))

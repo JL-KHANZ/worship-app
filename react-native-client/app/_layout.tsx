@@ -39,10 +39,13 @@ export default function RootLayout() {
             <Stack.Screen name="(app)" options={{ headerShown: false }} />
             <Stack.Screen name="upload" options={{ headerShown: false }} />
             <Stack.Screen name="songs" options={{ headerShown: false }} />
-            <Stack.Screen name="set/SetView" options={{ 
+            <Stack.Screen name="set" options={{ 
               headerShown: true, 
               title: "콘티 만들기",
               headerBackTitle: "뒤로"
+              }} />
+            <Stack.Screen name="setviewer" options={{ 
+              headerShown: false, 
               }} />
             <Stack.Screen name="+not-found" />
           </Stack>

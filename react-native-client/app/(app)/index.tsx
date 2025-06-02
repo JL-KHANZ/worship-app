@@ -1,6 +1,6 @@
 import { Animated, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
-import SongsListViewComp from '@/components/songcomps/SongsListComp';
+import SongsListComp from '@/components/songcomps/SongsListComp';
 import { getRecentSongList, getRecommendedSongList, getTrendingSongList } from '@/api';
 import SearchBar from '@/components/SearchBar';
 import { bgColor, primaryColor } from '@/components/ui/PrefStyles';
@@ -99,7 +99,7 @@ export default function HomeScreen() {
         )}
       >
         <View style={{ height: TITLE_HEIGHT }} />
-        <SongsListViewComp
+        <SongsListComp
           onSelectSong={(item: SONGCLIENT) => selectSong(item)}
           onDeselectSong={(item: SONGCLIENT) => deselectSong(item)}
           onPressSong={(item: SONGCLIENT) => gotoSong(item)}

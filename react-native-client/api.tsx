@@ -107,7 +107,7 @@ export const getSet = (setId: string): SETCLIENT => {
   return foundSet;
 }
 
-export const getUserSets = (userId: number): Array<SETCLIENT> => {
+export const getUserSets = (userId: string): Array<SETCLIENT> => {
   // const user = getUser(userId);
 
   // var userSets: Array<SETOBJ> = [];
@@ -324,7 +324,7 @@ const set1: SETCLIENT = {
   lastViewed: "21/01/2025",
   views: 7,
   ownerId: "1234",
-  songs: [examplesong1, examplesong2]
+  songs: [examplesong1, examplesong2, examplesong3, examplesong4]
 }
 
 const set2: SETCLIENT = {

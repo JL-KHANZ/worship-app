@@ -1,115 +1,87 @@
-import { Image, StyleSheet, Platform, ScrollView, Text, SafeAreaView, View, Animated, FlatList, Alert } from 'react-native';
+import { Image, StyleSheet, Platform, ScrollView, Text, SafeAreaView, View, Animated, FlatList, Alert, TouchableOpacity } from 'react-native';
 import { fontfamily, primaryColor, secondaryColor, tertiaryColor, bgColor, mainScreenStyles } from '@/components/ui/PrefStyles';
 import { getUser, getUserSets, getAllSongs, defaultUser } from '@/api';
 import { useEffect, useRef, useState } from 'react';
 import { useUser } from '@/context/userContext';
-import { INPUT_RANGE, MAX_FONT_SIZE, MIN_FONT_SIZE, OUTPUT_RANGE } from '.';
 import { responsiveStyleSheet } from '@/components/ui/responsive';
+import SetComp from '@/components/setcomps/SetComp';
+import { IconSymbol } from '@/components/ui/IconSymbol';
+import { router } from 'expo-router';
+
+const ITEM_WIDTH = 150;
+const ITEM_HEIGHT = 120;
 
 export default function ProfileScreen() {
   const [sets, setSets] = useState<Array<SETCLIENT>>([]);
-  const [userId, setUserId] = useState<number>(0);
 
-  const { user } = useUser()
+  const { user, saveUser } = useUser()
 
   useEffect(() => {
     async function getData() {
-      const res = await getUserSets(userId)
+      if (!user) return;
+      const res = await getUserSets(user?.uid)
       if (!res) {
 
       } else {
         setSets(res)
       }
     }
+    getData();
   }, [])
 
-  const scrollY = useRef(new Animated.Value(0)).current;
-
-  const fontSize = scrollY.interpolate({
-    inputRange: INPUT_RANGE,
-    outputRange: [MAX_FONT_SIZE, MIN_FONT_SIZE],
-    extrapolate: 'clamp',
-  })
-
-  const opacity = scrollY.interpolate({
-    inputRange: INPUT_RANGE,
-    outputRange: OUTPUT_RANGE,
-    extrapolate: 'clamp'
-  })
+  function logout() {
+    saveUser(null)
+    router.replace('/signin')
+  }
 
   return (
-    <SafeAreaView style={{ backgroundColor: bgColor, flex: 1 }}>
-      <View style={styles.titleWrapper}>
-        <Animated.Text style={[styles.pageTitle, { fontSize, opacity }]}>
-          {user?.username}
-        </Animated.Text>
+    <SafeAreaView style={styles.view}>
+      <View style={styles.headview}>
+        <Text style={styles.username}>{user?.username}</Text>
+        <TouchableOpacity onPress={logout}>
+          <IconSymbol 
+          name="rectangle.portrait.and.arrow.right" 
+          color={primaryColor} 
+          size={35}/>
+        </TouchableOpacity>
       </View>
-      <Animated.ScrollView
-        style={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-        scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: false }
-        )}
-      >
-      <Text style={setCompStyles.header}>내 콘티</Text>
-      <FlatList
-        data={sets}
-        renderItem={({ item }) => (
-          <View style={setCompStyles.view}>
-            <Text style={setCompStyles.title}>{item.name}</Text>
-          </View>
-        )}
-      />
-      </Animated.ScrollView>
+      <Text style={styles.header}>내 콘티</Text>
+      <View style={styles.container}>
+        {sets.map((item, index) => (
+          <SetComp set={item} />
+        ))}
+      </View>
     </SafeAreaView>
-  );
+  )
 }
 
-const styles = StyleSheet.create({
-  tag: {
-    flexDirection: 'row',
+const styles = responsiveStyleSheet({
+  headview: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 30,
+    marginBottom: 30,
   },
-  titleWrapper: {
-    position: 'absolute',
-    top: 50,
-    left: 0,
-    right: 0,
-    zIndex: 10,
-    paddingHorizontal: 55,
+  view: {
+    backgroundColor: bgColor,
+    flex: 1,
   },
-  pageTitle: {
-    fontWeight: '500',
-    color: primaryColor,
-  },
-  scrollContent: {
-    paddingTop: 130,
-    paddingHorizontal: 55,
-  },
-  roleLabel: {
+  username: {
     fontSize: 30,
-    fontWeight: "100",
-    color: primaryColor
-  }
-})
-
-const setCompStyles = responsiveStyleSheet({
+    color: primaryColor,
+    fontWeight: "700"
+  },
   header: {
     color: tertiaryColor,
     fontSize: 20,
     fontWeight: "600",
-    marginBottom: 8
+    marginBottom: 10,
+    marginHorizontal: 30,
   },
-  view: {
-    borderWidth: 1,
-    borderColor: primaryColor,
-    borderRadius: 10,
-    padding: 10,
-    width: 100,
-    height: 100
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginHorizontal: 15,
   },
-  title: {
 
-  }
 })
