@@ -18,13 +18,14 @@ import { useSetStore } from "@/lib/setStore";
 
 type createSetFieldProps = {
   songs: SONGCLIENT[];
+  emptySelectedSongs: () => void
 };
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const MIN_HEIGHT = 200;
 const MAX_HEIGHT = SCREEN_HEIGHT * 0.6;
 
-export default function CreateSetFieldComp({ songs }: createSetFieldProps) {
+export default function CreateSetFieldComp({ songs, emptySelectedSongs }: createSetFieldProps) {
   const animatedHeight = useRef(new Animated.Value(MIN_HEIGHT)).current;
   const currentHeightRef = useRef(MIN_HEIGHT);
 
@@ -77,7 +78,12 @@ export default function CreateSetFieldComp({ songs }: createSetFieldProps) {
         <View style={styles.sliderBar} />
       </View>
 
+      <View style={styles.header}>
       <Text style={styles.title}>콘티 만들기:</Text>
+      {/* <TouchableOpacity onPress={emptySelectedSongs}>
+        <IconSymbol name="trash.fill" color={"#fff"} size={30} />
+      </TouchableOpacity> */}
+      </View>
       <FlatList
         data={songs}
         keyExtractor={(item) => `${item.id}set`}
@@ -124,11 +130,15 @@ const styles = responsiveStyleSheet({
     borderRadius: 3,
     backgroundColor: secondaryColor,
   },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 30,
+    marginBottom: 20
+  },
   title: {
     fontSize: 15,
     color: secondaryColor,
-    marginBottom: 20,
-    marginLeft: 30
   },
   buttonView: {
     flexDirection: "row",

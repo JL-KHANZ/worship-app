@@ -10,28 +10,33 @@ declare global {
     teamId: string | null,
   }
   interface SONGCLIENT {
-    id: string
+    id: string,
     name: string,
     repKey: string | null,
     keys: Array<string> | null,
     artist: string | null,
     url: string,
-    teamId: string | null,
   }
 
   // sets should keep track of songs on their own
   interface SETCLIENT {
     id: string,
     name: string,
-    date: string,
+    targetDate: string,
+    dateCreated: Date,
     lastViewed: string,
     views: number,
-    ownerId: string,
     songs: Array<SONGCLIENT>,
+    ownerId: string,
+    teamId: string | null,
   }
   interface TEAMCLIENT {
     teamId: number,
     teamName: string,
+    createdDate: Date,
+    teamManagerId: string,
+    teamMemberIds: Array<string>,
+    teamCode: string,
   }
 }
 
@@ -159,7 +164,9 @@ export const getRecentSearchHistory = (): Array<string> => {
 
 
 
-
+export async function getUserTeams() {
+  return [team1]
+}
 
 
 export async function postSet(songs : Array<SONGCLIENT>) {
@@ -249,7 +256,6 @@ export const examplesong1: SONGCLIENT = {
   repKey: "A",
   keys: ["G", "B"],
   id: "1",
-  teamId: "1",
 }
 const examplesong2 : SONGCLIENT = {
   url: 'https://ik.imagekit.io/hanaworship/%E1%84%82%E1%85%A1%E1%84%8B%E1%85%B4_%E1%84%8B%E1%85%A8%E1%84%87%E1%85%A2%E1%84%85%E1%85%B3%E1%86%AF_%E1%84%87%E1%85%A1%E1%86%AE%E1%84%8B%E1%85%B3%E1%84%89%E1%85%A9%E1%84%89%E1%85%A5_E.jpeg?updatedAt=1748669213484',
@@ -258,7 +264,6 @@ const examplesong2 : SONGCLIENT = {
   repKey: "A",
   keys: ["G", "B"],
   id: "2",
-  teamId: "1"
 }
 const examplesong3 : SONGCLIENT = {
   url: 'https://ik.imagekit.io/hanaworship/%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%82%E1%85%B3%E1%86%BC%E1%84%92%E1%85%A1%E1%84%89%E1%85%B5%E1%86%AB_%E1%84%82%E1%85%A1%E1%84%8B%E1%85%B4_%E1%84%8C%E1%85%AE_%E1%84%92%E1%85%A1%E1%84%82%E1%85%A1%E1%84%82%E1%85%B5%E1%86%B7%E1%84%8B%E1%85%B3%E1%86%AB_B.jpeg?updatedAt=1748669332785',
@@ -267,7 +272,6 @@ const examplesong3 : SONGCLIENT = {
   repKey: "A",
   keys: ["G", "B"],
   id: "3",
-  teamId: "1"
 }
 const examplesong4 : SONGCLIENT = {
   url: 'https://ik.imagekit.io/hanaworship/%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%82%E1%85%B3%E1%86%BC%E1%84%92%E1%85%A1%E1%84%89%E1%85%B5%E1%86%AB_%E1%84%92%E1%85%A1%E1%84%82%E1%85%A1%E1%84%82%E1%85%B5%E1%86%B7_B.jpeg?updatedAt=1748670114691',
@@ -276,16 +280,17 @@ const examplesong4 : SONGCLIENT = {
   repKey: "A",
   keys: ["G", "B"],
   id: "4",
-  teamId: "1"
 }
 export const defaultSet: SETCLIENT = {
   id: "0",
   name: "example default set",
-  date: "15/04/2025",
+  targetDate: "15/04/2025",
+  dateCreated: new Date(2025, 3, 2),
   lastViewed: "21/01/2025",
   views: 0,
   ownerId: "1234",
-  songs: [examplesong1, examplesong2]
+  songs: [examplesong1, examplesong2],
+  teamId: "12345"
 }
 
 const user: USERCLIENT = {
@@ -320,25 +325,33 @@ const teamMember3: USERCLIENT = {
 const set1: SETCLIENT = {
   id: "1",
   name: "example set",
-  date: "15/04/2025",
+  targetDate: "15/04/2025",
+  dateCreated: new Date(2025, 3, 2),
   lastViewed: "21/01/2025",
   views: 7,
   ownerId: "1234",
+  teamId: "12345",
   songs: [examplesong1, examplesong2, examplesong3, examplesong4]
 }
 
 const set2: SETCLIENT = {
   id: "2",
   name: "example set2",
-  date: "15/06/2025",
+  targetDate: "15/04/2025",
+  dateCreated: new Date(2025, 3, 2),
   lastViewed: "21/02/2025",
   views: 7,
   ownerId: "1234",
+  teamId: null,
   songs: [examplesong1, examplesong2]
 }
 
 const team1: TEAMCLIENT= {
   teamId: 1,
   teamName: "조이팀",
+  createdDate: new Date(2025, 3, 2),
+  teamManagerId: "josh",
+  teamMemberIds: ["memberId1", "memberId2"],
+  teamCode: "조이팀483"
 }
 

@@ -51,6 +51,12 @@ export default function HomeScreen() {
       return updated;
     });
   }
+  function emptySelectedSongs() {
+    // for (var song of selectedSongsList) {
+    //   deselectSong(song)
+    // }
+    // setSelectedSongsList([])
+  }
   function getSearch(text: string) {
     setSearchText(text)
   }
@@ -109,7 +115,7 @@ export default function HomeScreen() {
         />
       </Animated.ScrollView>
       {creatingSet ?
-        <CreateSetFieldComp songs={selectedSongsList} />
+        <CreateSetFieldComp songs={selectedSongsList} emptySelectedSongs={emptySelectedSongs} />
         :
         <View>
         </View>

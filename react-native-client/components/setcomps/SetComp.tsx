@@ -22,7 +22,7 @@ export default function SetComp({ set }: Props) {
   return (
     <TouchableOpacity style={styles.view} onPress={gotoSet}>
       <Text style={styles.title}>{set.name}</Text>
-      <Text style={styles.date}>만든날짜:{set.date}</Text>
+      <Text style={styles.date}>만든날짜:{set.dateCreated}</Text>
       {set.songs.map((item, index) => (
         <View style={styles.setsonglist}>
           <Text style={styles.setsongindex}>{index+1}.</Text>
