@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Button, Image, ActivityIndicator, Alert, PermissionsAndroid, Platform, Text } from 'react-native';
+import { View, Button, Image, ActivityIndicator, Alert, PermissionsAndroid, Platform, Text, StyleSheet } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import axios from 'axios';
 import { TextInput } from 'react-native-gesture-handler';
@@ -13,15 +13,18 @@ export default function Upload() {
   return (
     <View>
       <Text
-      style={{margin: 100, textAlign: "center", fontSize: 70}}
+      style={{margin: 100, textAlign: "center", fontSize: 50}}
       >관리자 페이지</Text>
-      <TextInput/>
       <UploadImage />
     </View>
   )
 }
 
 function UploadImage() {
+  const [name, setName] = useState<string>('');
+  const [artist, setArtist] = useState<string>('');
+  const [url, setUrl] = useState<string>('');
+
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
 
@@ -97,9 +100,22 @@ function UploadImage() {
 
   return (
     <View style={{ alignItems: 'center', padding: 20 }}>
+      <TextInput placeholder='노래 이름' style={styles.input} onChangeText={setName}/>
+      <TextInput placeholder='아티스트' style={styles.input} onChangeText={setArtist}/>
+      <TextInput placeholder='url' style={styles.input} onChangeText={setUrl}/>
       <Button title="Select Image" onPress={pickImage} />
       {imageUri && <Image source={{ uri: imageUri }} style={{ width: 200, height: 200, marginTop: 16 }} />}
       {uploading && <ActivityIndicator style={{ marginTop: 16 }} />}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  input: {
+    borderWidth: 1,
+    borderColor: 'black',
+    marginBottom: 10,
+    padding: 10,
+    fontSize: 20,
+  }
+})

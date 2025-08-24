@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } f
 // import {...} from 'firebase/storage';
 
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, setDoc, doc } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBeOoCDJLKxLEXoRIqONidOnlJEXJop5Xk",
@@ -22,8 +22,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app)
 
-export const userSignIn = (user : USEROBJ) => {
-  createUserWithEmailAndPassword(auth, user.userEmail, user.userPwd)
+export const userSignIn = (user : USERCLIENT) => {
+  createUserWithEmailAndPassword(auth, user.email, "1111")
   .then((userCredential) => {
     // Signed up 
     const user = userCredential.user;
@@ -37,6 +37,12 @@ export const userSignIn = (user : USEROBJ) => {
     return false
   });
 }
+
+export const addSong = async(song : SONGCLIENT) => {
+  const songRef = collection(db, "songs");
+  await setDoc(doc(songRef, song.id), song);
+}
+
 
 // export const checkIfUserUsernameExists = async (userName : string) => {
 //   try {

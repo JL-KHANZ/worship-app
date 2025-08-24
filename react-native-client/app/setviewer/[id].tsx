@@ -9,13 +9,14 @@ import {
   Dimensions,
   FlatList,
   Image,
-  PanResponder,
-  PanResponderGestureState,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { runOnJS } from 'react-native-reanimated';
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -27,35 +28,89 @@ export default function SetViewer() {
 
   const [direction, setDirection] = useState<'left' | 'right'>('left');
   const slideAnim = useRef(new Animated.Value(0)).current;
+  const translateX = useRef(new Animated.Value(0)).current;
+  const autoHideTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Auto-hide toolbar after 3 seconds of inactivity
+  const startAutoHideTimer = () => {
+    if (autoHideTimeout.current) {
+      clearTimeout(autoHideTimeout.current);
+    }
+    
+    autoHideTimeout.current = setTimeout(() => {
+      setShowToolbar(false);
+    }, 3000);
+  };
+
+  // Clear timeout when component unmounts
+  useEffect(() => {
+    return () => {
+      if (autoHideTimeout.current) {
+        clearTimeout(autoHideTimeout.current);
+      }
+    };
+  }, []);
+
+  // Start auto-hide timer whenever toolbar is shown
+  useEffect(() => {
+    if (showToolbar) {
+      startAutoHideTimer();
+    }
+  }, [showToolbar]);
 
   function goBack() {
     router.back();
   }
 
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onPanResponderRelease: (_, gestureState: PanResponderGestureState) => {
-        const { dx, dy, } = gestureState;
-        const isTap = Math.abs(dx) < 5 && Math.abs(dy) < 5;
+  function goToNextSong() {
+    if (set && currentIndex < set.songs.length - 1) {
+      const newIndex = currentIndex + 1;
+      setCurrentIndex(newIndex);
+      setDirection('left');
+    }
+  }
 
-        if (!set) return;
+  function goToPreviousSong() {
+    if (currentIndex > 0) {
+      const newIndex = currentIndex - 1;
+      setCurrentIndex(newIndex);
+      setDirection('right');
+    }
+  }
 
-        if (isTap) {
-          setShowToolbar((prev) => !prev);
-          return
-        }
-        const swipeThreshold = 30;
-        if (dx > swipeThreshold) {
-          setDirection("right")
-          setCurrentIndex((prev) => Math.max(0, prev - 1))
-        } else if (dx < -swipeThreshold) {
-          setDirection("left")
-          setCurrentIndex((prev) => Math.min(prev + 1, set?.songs.length - 1))
-        }
-      },
+  function handleTap() {
+    setShowToolbar(!showToolbar);
+  }
+
+  // Enhanced swipe gesture handlers with visible animation
+  const swipeGesture = Gesture.Pan()
+    .onUpdate((event) => {
+      // Show real-time swipe animation
+      translateX.setValue(event.translationX);
     })
-  ).current;
+    .onEnd((event) => {
+      const { translationX, velocityX } = event;
+      const swipeThreshold = 80; // Minimum distance for swipe
+      const velocityThreshold = 400; // Minimum velocity for swipe
+      
+      if (Math.abs(translationX) > swipeThreshold || Math.abs(velocityX) > velocityThreshold) {
+        if (translationX > 0 || velocityX > 0) {
+          // Swipe right (left to right) - go to previous song
+          runOnJS(goToPreviousSong)();
+        } else {
+          // Swipe left (right to left) - go to next song
+          runOnJS(goToNextSong)();
+        }
+      }
+      
+      // Animate back to center
+      Animated.spring(translateX, {
+        toValue: 0,
+        useNativeDriver: true,
+        tension: 100,
+        friction: 8,
+      }).start();
+    });
 
   function Thumbnail() {
     function changeIndex(index: number) {
@@ -77,31 +132,48 @@ export default function SetViewer() {
   }
 
   return (
-    <View
-      style={{ flex: 1, backgroundColor: bgColor }}
-      {...panResponder.panHandlers}
-    >
-      {showToolbar && (
-        <View style={[toolbarStyles.toolbar, { width: screenWidth, zIndex: 900 }]}>
-          <TouchableOpacity style={toolbarStyles.backButton} onPress={goBack}>
-            <IconSymbol name="chevron.left" color={bgColor} />
-          </TouchableOpacity>
-        </View>
-      )}
-        <Image source={{ uri: set?.songs[currentIndex].url }} style={imageD.image} />
-      {showToolbar && (
-        <View
-          style={[toolbarStyles.bottomToolbar, { width: screenWidth, zIndex: 900 }]}
-          pointerEvents="box-none"
-        >
-          <Thumbnail />
-          <View style={toolbarStyles.thumbnailTextView}>
-            <Text style={toolbarStyles.title}>{set?.songs[currentIndex].name}</Text>
-            <Text style={toolbarStyles.artist}>{set?.songs[currentIndex].artist}</Text>
+    <GestureDetector gesture={swipeGesture}>
+      <View
+        style={{ flex: 1, backgroundColor: bgColor }}
+      >
+        {showToolbar && (
+          <View style={[toolbarStyles.toolbar, { width: screenWidth, zIndex: 900 }]}>
+            <TouchableOpacity style={toolbarStyles.backButton} onPress={goBack}>
+              <MaterialIcons name="chevron-left" color={bgColor} size={24} />
+            </TouchableOpacity>
+            <Text style={toolbarStyles.setTitle}>{set?.name}</Text>
+            <View style={toolbarStyles.spacer} />
           </View>
-        </View>
-      )}
-    </View>
+        )}
+        <TouchableOpacity 
+          style={{ flex: 1 }} 
+          onPress={handleTap}
+          activeOpacity={1}
+        >
+          <Animated.Image 
+            source={{ uri: set?.songs[currentIndex].url }} 
+            style={[
+              imageD.image,
+              {
+                transform: [{ translateX: translateX }]
+              }
+            ]} 
+          />
+        </TouchableOpacity>
+        {showToolbar && (
+          <View
+            style={[toolbarStyles.bottomToolbar, { width: screenWidth, zIndex: 900 }]}
+            pointerEvents="box-none"
+          >
+            <Thumbnail />
+            <View style={toolbarStyles.thumbnailTextView}>
+              <Text style={toolbarStyles.title}>{set?.songs[currentIndex].name}</Text>
+              <Text style={toolbarStyles.artist}>{set?.songs[currentIndex].artist}</Text>
+            </View>
+          </View>
+        )}
+      </View>
+    </GestureDetector>
   );
 }
 
@@ -163,6 +235,16 @@ const toolbarStyles = responsiveStyleSheet({
     alignItems: "center",
     justifyContent: "space-between",
     flex: 1
+  },
+  setTitle: {
+    color: bgColor,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    flex: 1,
+  },
+  spacer: {
+    width: 40, // Adjust as needed for spacing
   }
 });
 

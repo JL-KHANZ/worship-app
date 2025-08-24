@@ -4,12 +4,9 @@ import { getUser, getUserSets, getAllSongs, defaultUser } from '@/api';
 import { useEffect, useRef, useState } from 'react';
 import { useUser } from '@/context/userContext';
 import { responsiveStyleSheet } from '@/components/ui/responsive';
-import SetComp from '@/components/setcomps/SetComp';
+import SetListComp from '@/components/setcomps/SetListComp';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { router } from 'expo-router';
-
-const ITEM_WIDTH = 150;
-const ITEM_HEIGHT = 120;
 
 export default function ProfileScreen() {
   const [sets, setSets] = useState<Array<SETCLIENT>>([]);
@@ -45,12 +42,7 @@ export default function ProfileScreen() {
           size={35}/>
         </TouchableOpacity>
       </View>
-      <Text style={styles.header}>내 콘티</Text>
-      <View style={styles.container}>
-        {sets.map((item, index) => (
-          <SetComp set={item} />
-        ))}
-      </View>
+      <SetListComp viewTitle="내 콘티" setList={sets} />
     </SafeAreaView>
   )
 }
@@ -71,17 +63,4 @@ const styles = responsiveStyleSheet({
     color: primaryColor,
     fontWeight: "700"
   },
-  header: {
-    color: tertiaryColor,
-    fontSize: 20,
-    fontWeight: "600",
-    marginBottom: 10,
-    marginHorizontal: 30,
-  },
-  container: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginHorizontal: 15,
-  },
-
 })

@@ -10,11 +10,17 @@ const MAPPING = {
   // See MaterialIcons here: https://icons.expo.fyi
   // See SF Symbols in the SF Symbols app on Mac.
   'house.fill': 'home',
+  'map.fill': 'map',
+  'person': 'person',
   'paperplane.fill': 'send',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
+  'chevron.left': 'chevron-left',
+  'chevron.up': 'keyboard-arrow-up',
+  'chevron.down': 'keyboard-arrow-down',
   'a.magnify': 'search',
-  'person': 'person',
+  'trash.fill': 'delete',
+  'rectangle.portrait.and.arrow.right': 'logout',
 } as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],

@@ -15,6 +15,7 @@ import { responsiveStyleSheet } from "../ui/responsive";
 import { IconSymbol } from "../ui/IconSymbol";
 import { router } from "expo-router";
 import { useSetStore } from "@/lib/setStore";
+import { MaterialIcons } from "@expo/vector-icons";
 
 type createSetFieldProps = {
   songs: SONGCLIENT[];
@@ -79,21 +80,25 @@ export default function CreateSetFieldComp({ songs, emptySelectedSongs }: create
       </View>
 
       <View style={styles.header}>
-      <Text style={styles.title}>콘티 만들기:</Text>
-      {/* <TouchableOpacity onPress={emptySelectedSongs}>
-        <IconSymbol name="trash.fill" color={"#fff"} size={30} />
-      </TouchableOpacity> */}
+        <Text style={styles.title}>콘티 만들기:</Text>
+        {/* <TouchableOpacity onPress={emptySelectedSongs}>
+          <IconSymbol name="trash.fill" color={"#fff"} size={30} />
+        </TouchableOpacity> */}
       </View>
-      <FlatList
-        data={songs}
-        keyExtractor={(item) => `${item.id}set`}
-        contentContainerStyle={styles.listContent}
-        renderItem={({ item, index }) => <ChosenSongComp song={item} numb={index + 1} />}
-      />
+      
+      <View style={styles.contentContainer}>
+        <FlatList
+          data={songs}
+          keyExtractor={(item) => `${item.id}set`}
+          contentContainerStyle={styles.listContent}
+          renderItem={({ item, index }) => <ChosenSongComp song={item} numb={index + 1} />}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
 
       <View style={styles.buttonView}>
         <TouchableOpacity style={styles.button} onPress={toCreatePage}>
-          <IconSymbol name="arrow.right" color={secondaryColor} />
+          <MaterialIcons name="arrow-forward" color={secondaryColor} size={24} />
         </TouchableOpacity>
       </View>
     </Animated.View>
@@ -117,7 +122,8 @@ const sheetStyles = StyleSheet.create({
 
 const styles = responsiveStyleSheet({
   listContent: {
-    paddingBottom: 50,
+    paddingBottom: 20,
+    flexGrow: 1,
   },
   sliderHandle: {
     height: 30,
@@ -134,22 +140,30 @@ const styles = responsiveStyleSheet({
     flexDirection: "row",
     justifyContent: "space-between",
     marginHorizontal: 30,
-    marginBottom: 20
+    marginBottom: 20,
+    alignItems: 'center',
   },
   title: {
     fontSize: 15,
     color: secondaryColor,
+    fontWeight: '600',
+  },
+  contentContainer: {
+    flex: 1,
+    paddingHorizontal: 30,
+    marginBottom: 20,
   },
   buttonView: {
     flexDirection: "row",
     justifyContent: "flex-end",
-    marginRight: 30,    
+    marginRight: 30,
+    marginBottom: 20,
   },
   button: {
-    marginBottom: 70,
     borderWidth: 1,
     borderRadius: 50,
-    padding: 3,
-    borderColor: bgColor
-  }
+    padding: 8,
+    borderColor: bgColor,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  },
 });

@@ -10,7 +10,7 @@ import { responsiveStyleSheet } from '@/components/ui/responsive';
 import { router } from 'expo-router';
 import { getUserTeams } from '@/api';
 import { TeamProvider, useTeam } from '@/context/teamContext';
-import TeamCalendar from '../team/teamcalendar';
+import TeamCalendar from '../../components/calendar/TeamCalendar';
 
 export default function TeamSpaceScreen() {
   const [userTeams, setUserTeams] = useState<Array<TEAMCLIENT>>([]);
@@ -45,7 +45,6 @@ export default function TeamSpaceScreen() {
     } else {
       return (
         <View>
-          <Text>{userTeams[currentTeamIndex].teamName}</Text>
           <TeamCalendar />
         </View>
       )

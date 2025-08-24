@@ -5,9 +5,11 @@ import { useSongStore } from "@/lib/setStore";
 import { router } from "expo-router";
 import { useState } from "react";
 import { Image, Text, TouchableOpacity, View, StyleSheet, Dimensions, TouchableWithoutFeedback } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
+
 export default function SongViewPage() {
   const song: SONGCLIENT | null = useSongStore((state) => state.selectedSong)
 
@@ -16,6 +18,7 @@ export default function SongViewPage() {
   function handleTap() {
     setShowToolbar(!showToolbar)
   }
+  
   function goBack() {
     router.back()
   }
@@ -27,7 +30,7 @@ export default function SongViewPage() {
         <TouchableWithoutFeedback onPress={() => {}}>
             <View style={[styles.toolbar, { width: screenWidth, zIndex: 900 }]}>
               <TouchableOpacity style={toolbarStyles.backButton} onPress={goBack}>
-                <IconSymbol name="chevron.left" color={bgColor} />
+                <MaterialIcons name="chevron-left" color={bgColor} size={24} />
               </TouchableOpacity>
             </View>
         </TouchableWithoutFeedback>
